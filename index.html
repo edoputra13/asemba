@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Toko Produk — Demo</title>
+  <title>DEEPA STORE</title>
   <style>
     :root{ --bg:#f5f7fa; --card:#ffffff; --muted:#6b7280; --accent:#0ea5a4; --glass: rgba(255,255,255,0.6); --shadow: 0 6px 18px rgba(15,23,42,0.08); font-family:'Mecha', sans-serif; }
     *{box-sizing:border-box}
@@ -96,7 +96,7 @@
     <div style="display:flex;align-items:center;gap:12px;max-width:1100px;margin:0;width:100%;padding:0 20px 0 0;">
       <img src="https://picsum.photos/seed/profile/80/80" alt="Foto Profil" class="profile-img">
       <div>
-        <h1>Toko Demo</h1>
+        <h1>DEEPA STORE</h1>
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:14px;padding:0 20px;">
@@ -131,12 +131,12 @@
 
       <!-- Special Products Section -->
       <section class="special-products" aria-label="Produk Khusus">
-        <h2 style="font-size:16px;margin:0 0 12px 0">Produk Khusus</h2>
+        <h2 style="font-size:16px;margin:0 0 12px 0">DISNEY PREMIUM</h2>
         <div class="grid" id="special-grid"></div>
       </section>
 
       <section class="testi-section" aria-label="Testimoni">
-        <h2 style="font-size:16px;margin:0 0 12px 0">Testimoni Pelanggan</h2>
+        <h2 style="font-size:16px;margin:0 0 12px 0">Testimoni Customer</h2>
         <div class="testi-grid" id="testi-grid"></div>
       </section>
     </main>
@@ -185,14 +185,18 @@
     const sideMenuBtn = document.getElementById('side-menu-btn');
 
     // -- Data
-    const phoneNumber = '6281234567890';
+    const phoneNumber = '6281717622225';
     const products = [
-      {id:1,name:'Kopi Arabica',price:75000,desc:'Kopi bubuk pilihan, 250g',image:'https://picsum.photos/seed/kopi/200/200'},
-      {id:2,name:'Tas Kanvas',price:120000,desc:'Tahan lama, ukuran sedang',image:'https://picsum.photos/seed/tas/200/200'},
-      {id:3,name:'Lampu LED',price:95000,desc:'Hemat energi, terang',image:'https://picsum.photos/seed/lampu/200/200'},
-      {id:4,name:'Buku Catatan',price:35000,desc:'A5, 100 halaman',image:'https://picsum.photos/seed/buku/200/200'},
-      {id:5,name:'Sepatu Sneakers',price:325000,desc:'Nyaman untuk harian',image:'https://picsum.photos/seed/sepatu/200/200'},
-      {id:6,name:'Botol Minum',price:45000,desc:'BPA free, 500ml',image:'https://picsum.photos/seed/botol/200/200'}
+      {id:1,name:'WhatsApp',price:8000,desc:'Garansi verifikasi ulang 10 hari',image:'https://picsum.photos/seed/kopi/200/200'},
+      {id:2,name:'WhatsApp',price:12000,desc:'Garansi verifikasi ulang 30 hari',image:'https://picsum.photos/seed/tas/200/200'},
+      {id:3,name:'WhatsApp',price:15000,desc:'Garansi verifikasi ulang 30 hari, nomor belum terdaftar apk lain',image:'https://picsum.photos/seed/lampu/200/200'},
+      {id:4,name:'Telegram',price:8000,desc:'Tidak ada garansi',image:'https://picsum.photos/seed/buku/200/200'},
+      {id:5,name:'Gojek',price:3000,desc:'Tidak ada garansi',image:'https://picsum.photos/seed/sepatu/200/200'},
+      {id:6,name:'Shopee',price:3000,desc:'Tidak ada garansi',image:'https://picsum.photos/seed/sepatu/200/200'},
+      {id:7,name:'Gmail',price:2500,desc:'Garansi verifikasi 10 hari',image:'https://picsum.photos/seed/sepatu/200/200'},
+      {id:8,name:'Lazada',price:2000,desc:'Garansi verifikasi 3 hari',image:'https://picsum.photos/seed/sepatu/200/200'},
+      {id:9,name:'KopKen',price:2500,desc:'Tidak ada garansi',image:'https://picsum.photos/seed/sepatu/200/200'},
+      {id:10,name:'Botol Minum',price:45000,desc:'BPA free, 500ml',image:'https://picsum.photos/seed/botol/200/200'}
     ];
 
     const testimonials = [
@@ -203,9 +207,9 @@
     ];
 
     const specialProducts = [
-      {id:101,name:'Paket Hemat Kopi',price:180000,desc:'Bundle 3x250g — hemat 15%',image:'https://picsum.photos/seed/special1/200/200'},
-      {id:102,name:'Edisi Terbatas Tas',price:220000,desc:'Desain eksklusif edisi terbatas',image:'https://picsum.photos/seed/special2/200/200'},
-      {id:103,name:'Lampu Smart',price:155000,desc:'Kontrol via aplikasi, hemat energi',image:'https://picsum.photos/seed/special3/200/200'}
+      {id:101,name:'Disney 1 Day',price:3000,desc:'Premium Plan, 3 User, Antilimit',image:'https://picsum.photos/seed/special1/200/200'},
+      {id:102,name:'Disney 3 Day',price:6000,desc:'Premium Plan, 3 User, Antilimit',image:'https://picsum.photos/seed/special2/200/200'},
+      {id:103,name:'Lampu Smart',price:155000,desc:'Premium Plan, 3 User, Antilimit',image:'https://picsum.photos/seed/special3/200/200'}
     ];
 
     // -- Rendering
