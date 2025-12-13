@@ -317,16 +317,38 @@
     if(searchInput){ searchInput.addEventListener('input', ()=>{ const term = searchInput.value.toLowerCase(); document.querySelectorAll('#product-grid article, #special-grid article').forEach(item=>{ const titleEl = item.querySelector('.title'); const descEl = item.querySelector('.desc'); const title = titleEl ? titleEl.textContent.toLowerCase() : ''; const desc = descEl ? descEl.textContent.toLowerCase() : ''; const match = title.includes(term) || desc.includes(term) || term.trim()===''; item.style.display = match ? 'block' : 'none'; }); }); }
 
     // modal functions (show only description + WA as requested)
-    function openModal(p){ if(!modal) return; if(modalTitle) modalTitle.style.display='none'; if(modalPrice) modalPrice.style.display='none'; if(modalImage && modalImage.parentElement) modalImage.parentElement.style.display='none'; if(modalDesc && modalDesc.parentElement) modalDesc.parentElement.style.flex='1 1 100%'; modalDesc.textContent = p.desc || ''; if(modalWA){ modalWA.style.display='inline-block'; modalWA.onclick = ()=>{ const text = encodeURIComponent(`Halo, saya mau tanyakan tentang *${p.name}* (ID: ${p.id})`); window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank'); }; }
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden','false');
-      // Close modal on next click anywhere (after this event completes)
-      setTimeout(()=>{
-        document.addEventListener('click', function _closeOnAnyClick(){
-          closeModal();
-        }, {once:true});
-      }, 0);
-    }
+    function openModal(p){
+  if(!modal) return;
+
+  /* sembunyikan elemen yang tidak dipakai */
+  if(modalTitle) modalTitle.style.display = 'none';
+  if(modalPrice) modalPrice.style.display = 'none';
+  if(modalImage && modalImage.parentElement){
+    modalImage.parentElement.style.display = 'none';
+  }
+
+  /* isi konten */
+  modalDesc.textContent = p.desc || '';
+
+  if(modalDesc && modalDesc.parentElement){
+    modalDesc.parentElement.style.flex = '1 1 100%';
+  }
+
+  if(modalWA){
+    modalWA.style.display = 'inline-block';
+    modalWA.onclick = () => {
+      const text = encodeURIComponent(
+        `Halo, saya mau tanyakan tentang *${p.name}* (ID: ${p.id})`
+      );
+      window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank');
+    };
+  }
+
+  /* buka modal */
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
 
     function closeModal(){ if(modal){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); if(modalTitle) modalTitle.style.display='block'; if(modalPrice) modalPrice.style.display='block'; if(modalImage && modalImage.parentElement) modalImage.parentElement.style.display='block'; } }
     if(modalClose) modalClose.addEventListener('click', closeModal);
