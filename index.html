@@ -231,9 +231,15 @@
         const el = document.createElement('article'); el.className='card';
         el.innerHTML = `
           <div class="thumb">
-            <div class="icon-box" aria-hidden="true"><img src="${p.image}" alt="${p.name}" class="mini-icon"></div>
-            <div style="flex:1"><h3 class="title">${p.name}</h3><p class="desc">${p.desc}</p></div>
-          </div>
+  <div class="icon-box">
+    <img src="${p.image}" alt="${p.name}" class="mini-icon">
+  </div>
+  <div style="flex:1">
+    <h3 class="title">${p.name}</h3>
+    <!-- deskripsi dihapus dari card -->
+  </div>
+</div>
+
           <div class="price-row"><div class="price">Rp ${p.price.toLocaleString('id-ID')}</div>
             <div class="actions"><button class="btn detail" data-id="${p.id}">Detail</button><button class="btn wa" data-id="${p.id}">WhatsApp</button></div>
           </div>`;
@@ -248,9 +254,15 @@
         const el = document.createElement('article'); el.className='card'; el.id = 'special-' + p.id;
         el.innerHTML = `
           <div class="thumb">
-            <div class="icon-box" aria-hidden="true"><img src="${p.image}" alt="${p.name}" class="mini-icon"></div>
-            <div style="flex:1"><h3 class="title">${p.name}</h3><p class="desc">${p.desc}</p></div>
-          </div>
+  <div class="icon-box">
+    <img src="${p.image}" alt="${p.name}" class="mini-icon">
+  </div>
+  <div style="flex:1">
+    <h3 class="title">${p.name}</h3>
+    <!-- deskripsi dihapus dari card -->
+  </div>
+</div>
+
           <div class="price-row"><div class="price">Rp ${p.price.toLocaleString('id-ID')}</div>
             <div class="actions"><button class="btn detail" data-id="${p.id}">Detail</button><button class="btn wa" data-id="${p.id}">WhatsApp</button></div>
           </div>`;
