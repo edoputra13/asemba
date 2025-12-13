@@ -374,25 +374,33 @@
     function openModal(p){
   if(!modal) return;
 
-  /* sembunyikan elemen yang tidak dipakai */
-  if(modalTitle) modalTitle.style.display = 'none';
+  /* tampilkan nama produk */
+  if(modalTitle){
+    modalTitle.textContent = p.name;
+    modalTitle.style.display = 'block';
+  }
+
+  /* harga tetap disembunyikan */
   if(modalPrice) modalPrice.style.display = 'none';
+
+  /* sembunyikan gambar */
   if(modalImage && modalImage.parentElement){
     modalImage.parentElement.style.display = 'none';
   }
 
-  /* isi konten */
+  /* isi deskripsi */
   modalDesc.textContent = p.desc || '';
 
   if(modalDesc && modalDesc.parentElement){
     modalDesc.parentElement.style.flex = '1 1 100%';
   }
 
+  /* tombol WA */
   if(modalWA){
     modalWA.style.display = 'inline-block';
     modalWA.onclick = () => {
       const text = encodeURIComponent(
-        `Halo, saya mau tanyakan tentang *${p.name}* (ID: ${p.id})`
+        `Halo, saya tertarik dengan produk *${p.name}* (ID: ${p.id})`
       );
       window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank');
     };
@@ -400,9 +408,8 @@
 
   /* buka modal */
   modal.classList.add('open');
-  modal.setAttribute('aria-hidden', 'false');
+  modal.setAttribute('aria-hidden','false');
 }
-
 
     function closeModal(){
   modal.classList.remove('open');
