@@ -158,7 +158,7 @@
   </div>
 
   <div class="announcement-bar">
-    <div class="announcement-text">12.12 DISINI BELUM ADA PROMO CUY</div>
+    <div class="announcement-text">PROMO? MAAF BELUM ADA CUY, SESEKALI CEK WEB INI AJAA</div>
   </div>
 
   <audio id="bg-audio" src="minlee.m4a" preload="auto" loop></audio>
@@ -351,7 +351,7 @@
       const detailBtn = e.target.closest && e.target.closest('.btn.detail');
       const waBtn = e.target.closest && e.target.closest('.btn.wa');
       if(detailBtn){ const id = Number(detailBtn.dataset.id); const all = products.concat(specialProducts); const p = all.find(x=>x.id===id); if(p) openModal(p); return; }
-      if(waBtn){ const id = Number(waBtn.dataset.id); const all = products.concat(specialProducts); const p = all.find(x=>x.id===id); if(p){ const text = encodeURIComponent(`Halo, saya tertarik dengan produk *${p.name}* (ID: ${p.id}). Harga: Rp ${p.price.toLocaleString('id-ID')}. Apakah masih tersedia?`); window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank'); } return; }
+      if(waBtn){ const id = Number(waBtn.dataset.id); const all = products.concat(specialProducts); const p = all.find(x=>x.id===id); if(p){ const text = encodeURIComponent(`Halo, aku tertarik dengan produk *${p.name}* (ID: ${p.id}). Harga: Rp ${p.price.toLocaleString('id-ID')}. Apakah masih tersedia?`); window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank'); } return; }
 
       // close search if clicking outside
       const isSearchBox = e.target.closest && e.target.closest('#search-box');
