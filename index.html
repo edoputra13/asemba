@@ -350,8 +350,24 @@
 }
 
 
-    function closeModal(){ if(modal){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); if(modalTitle) modalTitle.style.display='block'; if(modalPrice) modalPrice.style.display='block'; if(modalImage && modalImage.parentElement) modalImage.parentElement.style.display='block'; } }
-    if(modalClose) modalClose.addEventListener('click', closeModal);
+    function closeModal(){
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+}
+
+/* tombol X */
+modalClose.addEventListener('click', closeModal);
+
+/* klik area gelap */
+modal.addEventListener('click', (e)=>{
+  if(e.target === modal) closeModal();
+});
+
+/* tombol ESC */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') closeModal();
+});
+
 
     // phone display
     const phoneEl = document.getElementById('phone-display'); if(phoneEl){ phoneEl.textContent = '+62 ' + phoneNumber.slice(2,6) + '-' + phoneNumber.slice(6,10) + '-' + phoneNumber.slice(10); }
