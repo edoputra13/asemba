@@ -7,60 +7,112 @@
 
 <style>
 :root{
-  --bg:#f5f7fa;
+  --bg:#f1f5fb;
   --card:#ffffff;
-  --shadow:0 6px 18px rgba(15,23,42,.08);
-  font-family:'Mecha',sans-serif;
+  --primary:#3b82f6;
+  --soft:#eef4ff;
+  --muted:#6b7280;
+  --ok:#16a34a;
+  --warn:#f59e0b;
+  --danger:#ef4444;
+  --shadow:0 14px 40px rgba(15,23,42,.1);
+  font-family:'Mecha',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#0f172a}
 
+body.dark{
+  --bg:#020617;
+  --card:#0f172a;
+  --soft:#020617;
+  --muted:#9ca3af;
+  color:#e5e7eb;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:linear-gradient(180deg,var(--soft),var(--bg));
+}
+
+/* HEADER */
 header{
   position:sticky;top:0;z-index:50;
-  padding:14px 20px;
-  background:linear-gradient(135deg,#d9efff,#ffffff,#cfe9ff);
-  border-radius:0 0 18px 18px;
+  padding:16px 22px;
+  background:linear-gradient(135deg,#cfe7ff,#ffffff,#e0f2fe);
+  border-radius:0 0 24px 24px;
   display:flex;align-items:center;justify-content:space-between;
-}
-
-.container{
-  max-width:900px;
-  margin:30px auto;
-  padding:20px;
-}
-
-.list,.detail{
-  background:var(--card);
-  border-radius:12px;
   box-shadow:var(--shadow);
-  padding:16px;
-  margin-bottom:16px;
 }
 
-.list li{
-  list-style:none;
-  padding:10px;
-  border-bottom:1px solid #e5e7eb;
-  cursor:pointer;
-  font-weight:600;
-}
-.list li:hover{background:#eef2ff}
+/* LAYOUT */
+.container{max-width:1000px;margin:36px auto;padding:20px}
 
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  padding:20px;
+  margin-bottom:20px;
+}
+
+/* CUSTOMER */
+.customer{
+  display:flex;align-items:center;gap:12px;
+  padding:14px;border-radius:16px;
+  cursor:pointer;margin-bottom:10px;
+  background:linear-gradient(135deg,#f8fafc,var(--soft));
+}
+.avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(135deg,#60a5fa,#2563eb);
+  color:#fff;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* DETAIL */
 .detail{display:none}
 
-.product-item{
-  padding:10px;
-  border-bottom:1px solid #e5e7eb;
+/* PRODUCT */
+.product{
+  background:linear-gradient(135deg,#f9fbff,#ffffff);
+  border-radius:16px;
+  padding:14px 16px;
+  margin-bottom:14px;
+  box-shadow:0 6px 20px rgba(15,23,42,.08);
 }
-.product-item:last-child{border-bottom:none}
 
-.countdown{
-  font-size:13px;
-  margin-top:4px;
-  font-weight:600;
+/* PROGRESS */
+.progress{
+  height:6px;background:#e5e7eb;
+  border-radius:999px;overflow:hidden;
+  margin-top:8px;
 }
-.countdown.active{color:#16a34a}
-.countdown.expired{color:#ef4444}
+.progress div{
+  height:100%;
+  background:linear-gradient(90deg,#22c55e,#4ade80);
+}
+
+/* BADGE */
+.badge{
+  font-size:11px;
+  padding:3px 8px;
+  border-radius:999px;
+  font-weight:700;margin-left:6px;
+}
+.warn{background:#fef3c7;color:#92400e}
+.exp{background:#fee2e2;color:#991b1b}
+
+/* ACTION */
+.actions{margin-top:10px}
+.btn{
+  border:0;border-radius:10px;
+  padding:6px 10px;font-weight:600;
+  cursor:pointer;
+  background:#e0f2fe;color:#0369a1;
+}
+
+/* TOGGLE */
+.toggle{cursor:pointer;font-weight:600}
 </style>
 </head>
 
@@ -68,43 +120,102 @@ header{
 
 <header>
   <strong>Daftar Pelanggan</strong>
-  <a href="index.html" style="text-decoration:none;font-weight:600;color:#3730a3">← Kembali</a>
+  <div class="toggle" id="darkToggle">🌓 Mode</div>
 </header>
 
 <div class="container">
-
-  <div class="list">
+  <div class="card">
     <h3>Nama Pelanggan</h3>
-    <ul id="customer-list"></ul>
+    <div id="customer-list"></div>
   </div>
 
-  <div class="detail" id="customer-detail">
+  <div class="card detail" id="detail">
     <h3 id="cust-name"></h3>
-    <ul id="product-list"></ul>
+    <div id="product-list"></div>
   </div>
-
 </div>
 
 <script>
-/* =======================
-   DATA PRODUK
-======================= */
-const products = [
-  {id:1,name:'Kopi Arabica'},
-  {id:2,name:'Tas Kanvas'},
-  {id:3,name:'Lampu LED'},
-  {id:4,name:'Buku Catatan'}
-];
+document.addEventListener('DOMContentLoaded', () => {
 
-/* =======================
-   DATA PELANGGAN + SEWA
-   endTime = WAKTU SELESAI SEWA
-======================= */
-const customers = [
-  {
-    name:'Andi Pratama',
-    rentals:[
-      {productId:1, endTime:'2025-12-20T18:00:00'},
-      {productId:3, endTime:'2025-12-18T12:00:00'}
-    ]
+  const products = [
+    {id:1,name:'Kopi Arabica'},
+    {id:2,name:'Tas Kanvas'},
+    {id:3,name:'Lampu LED'},
+    {id:4,name:'Buku Catatan'}
+  ];
+
+  const customers = [
+    {
+      name:'Andi Pratama',
+      rentals:[
+        {productId:1,end:'2025-12-20T18:00:00'},
+        {productId:3,end:'2025-12-18T12:00:00'}
+      ]
+    },
+    {
+      name:'Siti Aisyah',
+      rentals:[
+        {productId:2,end:'2025-12-15T09:00:00'}
+      ]
+    }
+  ];
+
+  const list=document.getElementById('customer-list');
+  const detail=document.getElementById('detail');
+  const cname=document.getElementById('cust-name');
+  const plist=document.getElementById('product-list');
+
+  customers.forEach(c=>{
+    const div=document.createElement('div');
+    div.className='customer';
+    div.innerHTML=`<div class="avatar">${c.name[0]}</div><strong>${c.name}</strong>`;
+    div.onclick=()=>showDetail(c);
+    list.appendChild(div);
+  });
+
+  function showDetail(c){
+    cname.textContent=c.name;
+    plist.innerHTML='';
+    detail.style.display='block';
+
+    c.rentals.forEach(r=>{
+      const p=products.find(x=>x.id===r.productId);
+      if(!p) return;
+
+      const now=Date.now();
+      const end=new Date(r.end).getTime();
+      const left=end-now;
+
+      let percent = 0;
+      if(left > 0){
+        percent = Math.min(100, Math.max(5, (left / (left + 86400000)) * 100));
+      }
+
+      let badge='';
+      if(left<=0) badge='<span class="badge exp">HABIS</span>';
+      else if(left<86400000) badge='<span class="badge warn">HAMPIR HABIS</span>';
+
+      const box=document.createElement('div');
+      box.className='product';
+      box.innerHTML=`
+        <strong>${p.name}</strong>${badge}
+        <div class="progress"><div style="width:${percent}%"></div></div>
+        <div class="actions">
+          <button class="btn">+1 Hari</button>
+        </div>
+      `;
+      plist.appendChild(box);
+    });
+  }
+
+  document.getElementById('darkToggle').onclick = () => {
+    document.body.classList.toggle('dark');
+  };
+
+});
+</script>
+
+</body>
+</html>
 
