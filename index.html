@@ -143,17 +143,30 @@
     </div>
     <div style="display:flex;align-items:center;gap:14px;padding:0 20px;">
       <a href="pelanggan.html"
+   aria-label="Daftar Pelanggan"
+   title="Pelanggan"
    style="
-     text-decoration:none;
-     padding:6px 10px;
-     border-radius:8px;
-     font-weight:600;
+     display:inline-flex;
+     align-items:center;
+     justify-content:center;
+     width:36px;
+     height:36px;
+     border-radius:10px;
      background:#eef2ff;
      color:#3730a3;
-     white-space:nowrap;
+     text-decoration:none;
    ">
-  Pelanggan
+  <!-- Icon user/group -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+       viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+  </svg>
 </a>
+
 
       <span id="phone-display" class="sr-only" aria-hidden="true"></span>
       <button id="search-btn" style="border:0;background:transparent;cursor:pointer;padding:6px" aria-label="Cari">
