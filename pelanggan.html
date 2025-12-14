@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daftar Pelanggan</title>
+
+<style>
+:root{
+  --bg:#f5f7fa;
+  --card:#ffffff;
+  --shadow:0 6px 18px rgba(15,23,42,.08);
+  font-family:'Mecha',sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#0f172a}
+
+header{
+  position:sticky;top:0;z-index:50;
+  padding:14px 20px;
+  background:linear-gradient(135deg,#d9efff,#ffffff,#cfe9ff);
+  border-radius:0 0 18px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+
+.container{
+  max-width:900px;
+  margin:30px auto;
+  padding:20px;
+}
+
+.list,.detail{
+  background:var(--card);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  padding:16px;
+  margin-bottom:16px;
+}
+
+.list li{
+  list-style:none;
+  padding:10px;
+  border-bottom:1px solid #e5e7eb;
+  cursor:pointer;
+  font-weight:600;
+}
+.list li:hover{
+  background:#eef2ff;
+}
+.detail{display:none}
+</style>
+</head>
+
+<body>
+
+<header>
+  <strong>Daftar Pelanggan</strong>
+  <a href="index.html" style="text-decoration:none;font-weight:600;color:#3730a3">← Kembali</a>
+</header>
+
+<div class="container">
+
+  <div class="list">
+    <h3>Nama Pelanggan</h3>
+    <ul id="customer-list"></ul>
+  </div>
+
+  <div class="detail" id="customer-detail">
+    <h3 id="cust-name"></h3>
+    <ul id="product-list"></ul>
+  </div>
+
+</div>
+
+<script>
+const products = [
+  {id:1,name:'Kopi Arabica',price:75000},
+  {id:2,name:'Tas Kanvas',price:120000},
+  {id:3,name:'Lampu LED',price:95000},
+  {id:4,name:'Buku Catatan',price:35000}
+];
+
+const customers = [
+  {name:'Andi Pratama',products:[1,3]},
+  {name:'Siti Aisyah',products:[2]},
+  {name:'Budi Santoso',products:[1,2,4]}
+];
+
+const listEl = document.getElementById('customer-list');
+const detailEl = document.getElementById('customer-detail');
+const nameEl = document.getElementById('cust-name');
+const prodEl = document.getElementById('product-list');
+
+customers.forEach(c=>{
+  const li = document.createElement('li');
+  li.textContent = c.name;
+  li.onclick = ()=>showDetail(c);
+  listEl.appendChild(li);
+});
+
+function showDetail(customer){
+  nameEl.textContent = customer.name;
+  prodEl.innerHTML = '';
+
+  customer.products.forEach(pid=>{
+    const p = products.find(x=>x.id===pid);
+    if(p){
+      const li = document.createElement('li');
+      li.textContent = `${p.name} — Rp ${p.price.toLocaleString('id-ID')}`;
+      prodEl.appendChild(li);
+    }
+  });
+
+  detailEl.style.display = 'block';
+}
+</script>
+
+</body>
+</html>
