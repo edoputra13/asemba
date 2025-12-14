@@ -9,28 +9,18 @@
 :root{
   --bg:#f1f5fb;
   --card:#ffffff;
-  --primary:#3b82f6;
   --soft:#eef4ff;
-  --muted:#6b7280;
-  --ok:#16a34a;
+  --shadow:0 14px 40px rgba(15,23,42,.1);
   --warn:#f59e0b;
   --danger:#ef4444;
-  --shadow:0 14px 40px rgba(15,23,42,.1);
-  font-family:'Mecha',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-}
-
-body.dark{
-  --bg:#020617;
-  --card:#0f172a;
-  --soft:#020617;
-  --muted:#9ca3af;
-  color:#e5e7eb;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
 }
 
 *{box-sizing:border-box}
 body{
   margin:0;
   background:linear-gradient(180deg,var(--soft),var(--bg));
+  color:#0f172a;
 }
 
 /* HEADER */
@@ -39,7 +29,7 @@ header{
   padding:16px 22px;
   background:linear-gradient(135deg,#cfe7ff,#ffffff,#e0f2fe);
   border-radius:0 0 24px 24px;
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;justify-content:space-between;align-items:center;
   box-shadow:var(--shadow);
 }
 
@@ -54,6 +44,38 @@ header{
   padding:20px;
   margin-bottom:20px;
 }
+
+/* SEARCH */
+#search-customer{
+  width:100%;
+  padding:10px 14px;
+  border-radius:12px;
+  border:1px solid #cbd5e1;
+  margin-bottom:10px;
+  font-size:14px;
+  outline:none;
+}
+#search-customer:focus{
+  border-color:#60a5fa;
+  box-shadow:0 0 0 3px rgba(96,165,250,.25);
+}
+
+/* SEARCH HISTORY */
+#search-history{
+  display:none;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 8px 20px rgba(15,23,42,.08);
+  padding:8px;
+  margin-bottom:14px;
+}
+.history-item{
+  padding:8px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+}
+.history-item:hover{background:#eef2ff}
 
 /* CUSTOMER */
 .customer{
@@ -70,11 +92,19 @@ header{
 }
 
 /* DETAIL */
-.detail{display:none}
+.detail{
+  display:none;
+  transition:opacity .2s ease, transform .2s ease;
+}
+.detail.show{
+  display:block;
+  opacity:1;
+  transform:translateY(0);
+}
 
 /* PRODUCT */
 .product{
-  background:linear-gradient(135deg,#f9fbff,#ffffff);
+  background:#f9fbff;
   border-radius:16px;
   padding:14px 16px;
   margin-bottom:14px;
@@ -95,37 +125,62 @@ header{
 /* BADGE */
 .badge{
   font-size:11px;
-  padding:3px 8px;
+  padding:4px 8px;
   border-radius:999px;
-  font-weight:700;margin-left:6px;
-}
-.warn{background:#fef3c7;color:#92400e}
-.exp{background:#fee2e2;color:#991b1b}
-
-/* ACTION */
-.actions{margin-top:10px}
-.btn{
-  border:0;border-radius:10px;
-  padding:6px 10px;font-weight:600;
-  cursor:pointer;
-  background:#e0f2fe;color:#0369a1;
+  font-weight:700;
+  margin-left:6px;
+  display:inline-flex;
+  align-items:center;
 }
 
-/* TOGGLE */
-.toggle{cursor:pointer;font-weight:600}
+/* HABIS */
+.badge.exp{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+/* HAMPIR HABIS */
+.badge.warn{
+  background:#fef3c7;
+  color:#92400e;
+  position:relative;
+  overflow:hidden;
+  animation:pulse 1.6s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(245,158,11,.5)}
+  70%{box-shadow:0 0 0 8px rgba(245,158,11,0)}
+  100%{box-shadow:0 0 0 0 rgba(245,158,11,0)}
+}
+.badge-text{
+  display:inline-block;
+  white-space:nowrap;
+  animation:fadeSwap 5s infinite;
+}
+@keyframes fadeSwap{
+  0%{opacity:1}
+  45%{opacity:1}
+  50%{opacity:0;transform:translateY(-4px)}
+  60%{opacity:1;transform:none}
+  100%{opacity:1}
+}
 </style>
 </head>
 
 <body>
 
 <header>
-  <strong>Daftar Pelanggan</strong>
-  <div class="toggle" id="darkToggle">🌓 Mode</div>
+  <strong>Daftar Customer</strong>
 </header>
 
 <div class="container">
+
   <div class="card">
-    <h3>Nama Pelanggan</h3>
+    <h3>Nama Customer</h3>
+
+    <input id="search-customer" placeholder="Cari nama pelanggan...">
+    <div id="search-history"></div>
+
     <div id="customer-list"></div>
   </div>
 
@@ -133,39 +188,39 @@ header{
     <h3 id="cust-name"></h3>
     <div id="product-list"></div>
   </div>
+
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-  const products = [
-    {id:1,name:'Kopi Arabica'},
-    {id:2,name:'Tas Kanvas'},
-    {id:3,name:'Lampu LED'},
-    {id:4,name:'Buku Catatan'}
+  const HISTORY_KEY='customer_search_history';
+
+  const products=[
+    {id:1,name:'Disney'},
+    {id:2,name:'Disney'},
+    {id:3,name:'Disney'},
+    {id:4,name:'Disney'}
   ];
 
-  const customers = [
-    {
-      name:'Andi Pratama',
-      rentals:[
-        {productId:1,end:'2025-12-20T18:00:00'},
-        {productId:3,end:'2025-12-18T12:00:00'}
-      ]
-    },
-    {
-      name:'Siti Aisyah',
-      rentals:[
-        {productId:2,end:'2025-12-15T09:00:00'}
-      ]
-    }
+  const customers=[
+    {name:'Andi Pratama',rentals:[
+      {productId:1,end:'2025-12-20T18:00:00'},
+      {productId:3,end:'2025-12-18T12:00:00'}
+    ]},
+    {name:'Siti Aisyah',rentals:[
+      {productId:2,end:'2025-12-15T09:00:00'}
+    ]}
   ];
 
   const list=document.getElementById('customer-list');
   const detail=document.getElementById('detail');
   const cname=document.getElementById('cust-name');
   const plist=document.getElementById('product-list');
+  const searchInput=document.getElementById('search-customer');
+  const historyBox=document.getElementById('search-history');
 
+  /* Render pelanggan */
   customers.forEach(c=>{
     const div=document.createElement('div');
     div.className='customer';
@@ -177,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function showDetail(c){
     cname.textContent=c.name;
     plist.innerHTML='';
-    detail.style.display='block';
+    detail.classList.add('show');
 
     c.rentals.forEach(r=>{
       const p=products.find(x=>x.id===r.productId);
@@ -187,31 +242,71 @@ document.addEventListener('DOMContentLoaded', () => {
       const end=new Date(r.end).getTime();
       const left=end-now;
 
-      let percent = 0;
-      if(left > 0){
-        percent = Math.min(100, Math.max(5, (left / (left + 86400000)) * 100));
-      }
+      let percent=left>0?Math.min(100,Math.max(5,(left/(left+86400000))*100)):0;
 
       let badge='';
-      if(left<=0) badge='<span class="badge exp">HABIS</span>';
-      else if(left<86400000) badge='<span class="badge warn">HAMPIR HABIS</span>';
+      if(left<=0){
+        badge='<span class="badge exp">HABIS</span>';
+      }else if(left<86400000){
+        const endDate=new Date(r.end).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
+        badge=`<span class="badge warn">
+          <span class="badge-text">HAMPIR HABIS</span>
+          <span class="badge-text">: ${endDate}</span>
+        </span>`;
+      }
 
       const box=document.createElement('div');
       box.className='product';
       box.innerHTML=`
         <strong>${p.name}</strong>${badge}
         <div class="progress"><div style="width:${percent}%"></div></div>
-        <div class="actions">
-          <button class="btn">+1 Hari</button>
-        </div>
       `;
       plist.appendChild(box);
     });
   }
 
-  document.getElementById('darkToggle').onclick = () => {
-    document.body.classList.toggle('dark');
-  };
+  /* Klik sembarang untuk menutup detail */
+  document.addEventListener('click',e=>{
+    if(!detail.classList.contains('show')) return;
+    if(!e.target.closest('.customer') && !e.target.closest('#detail')){
+      detail.classList.remove('show');
+    }
+  });
+
+  /* SEARCH + HISTORY */
+  function getHistory(){return JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');}
+  function saveHistory(t){
+    if(!t) return;
+    let h=getHistory().filter(x=>x!==t);
+    h.unshift(t); h=h.slice(0,5);
+    localStorage.setItem(HISTORY_KEY,JSON.stringify(h));
+  }
+  function renderHistory(){
+    const h=getHistory();
+    if(!h.length){historyBox.style.display='none';return;}
+    historyBox.innerHTML=h.map(x=>`<div class="history-item">${x}</div>`).join('');
+    historyBox.style.display='block';
+    historyBox.querySelectorAll('.history-item').forEach(i=>{
+      i.onclick=()=>{
+        searchInput.value=i.textContent;
+        filterCustomers(i.textContent);
+        historyBox.style.display='none';
+      };
+    });
+  }
+  function filterCustomers(t){
+    t=t.toLowerCase();
+    document.querySelectorAll('.customer').forEach(c=>{
+      c.style.display=c.textContent.toLowerCase().includes(t)?'flex':'none';
+    });
+  }
+
+  searchInput.addEventListener('input',()=>filterCustomers(searchInput.value));
+  searchInput.addEventListener('focus',renderHistory);
+  searchInput.addEventListener('blur',()=>setTimeout(()=>{
+    saveHistory(searchInput.value.trim());
+    historyBox.style.display='none';
+  },200));
 
 });
 </script>
