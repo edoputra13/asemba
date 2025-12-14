@@ -44,10 +44,23 @@ header{
   cursor:pointer;
   font-weight:600;
 }
-.list li:hover{
-  background:#eef2ff;
-}
+.list li:hover{background:#eef2ff}
+
 .detail{display:none}
+
+.product-item{
+  padding:10px;
+  border-bottom:1px solid #e5e7eb;
+}
+.product-item:last-child{border-bottom:none}
+
+.countdown{
+  font-size:13px;
+  margin-top:4px;
+  font-weight:600;
+}
+.countdown.active{color:#16a34a}
+.countdown.expired{color:#ef4444}
 </style>
 </head>
 
@@ -73,17 +86,42 @@ header{
 </div>
 
 <script>
+/* =======================
+   DATA PRODUK
+======================= */
 const products = [
-  {id:1,name:'Kopi Arabica',price:75000},
-  {id:2,name:'Tas Kanvas',price:120000},
-  {id:3,name:'Lampu LED',price:95000},
-  {id:4,name:'Buku Catatan',price:35000}
+  {id:1,name:'Kopi Arabica'},
+  {id:2,name:'Tas Kanvas'},
+  {id:3,name:'Lampu LED'},
+  {id:4,name:'Buku Catatan'}
 ];
 
+/* =======================
+   DATA PELANGGAN + SEWA
+   endTime = WAKTU SELESAI SEWA
+======================= */
 const customers = [
-  {name:'Andi Pratama',products:[1,3]},
-  {name:'Siti Aisyah',products:[2]},
-  {name:'Budi Santoso',products:[1,2,4]}
+  {
+    name:'Andi Pratama',
+    rentals:[
+      {productId:1, endTime:'2025-12-20T18:00:00'},
+      {productId:3, endTime:'2025-12-18T12:00:00'}
+    ]
+  },
+  {
+    name:'Siti Aisyah',
+    rentals:[
+      {productId:2, endTime:'2025-12-15T09:00:00'}
+    ]
+  },
+  {
+    name:'Budi Santoso',
+    rentals:[
+      {productId:1, endTime:'2025-12-22T20:00:00'},
+      {productId:2, endTime:'2025-12-19T10:00:00'},
+      {productId:4, endTime:'2025-12-16T08:00:00'}
+    ]
+  }
 ];
 
 const listEl = document.getElementById('customer-list');
@@ -91,6 +129,9 @@ const detailEl = document.getElementById('customer-detail');
 const nameEl = document.getElementById('cust-name');
 const prodEl = document.getElementById('product-list');
 
+/* =======================
+   RENDER LIST PELANGGAN
+======================= */
 customers.forEach(c=>{
   const li = document.createElement('li');
   li.textContent = c.name;
@@ -98,22 +139,64 @@ customers.forEach(c=>{
   listEl.appendChild(li);
 });
 
+/* =======================
+   DETAIL + COUNTDOWN
+======================= */
 function showDetail(customer){
   nameEl.textContent = customer.name;
   prodEl.innerHTML = '';
 
-  customer.products.forEach(pid=>{
-    const p = products.find(x=>x.id===pid);
-    if(p){
-      const li = document.createElement('li');
-      li.textContent = `${p.name} — Rp ${p.price.toLocaleString('id-ID')}`;
-      prodEl.appendChild(li);
-    }
+  customer.rentals.forEach((rental,idx)=>{
+    const p = products.find(x=>x.id===rental.productId);
+    if(!p) return;
+
+    const li = document.createElement('li');
+    li.className = 'product-item';
+
+    const cdId = `cd-${idx}-${Date.now()}`;
+    li.innerHTML = `
+      <strong>${p.name}</strong>
+      <div id="${cdId}" class="countdown"></div>
+    `;
+    prodEl.appendChild(li);
+
+    startCountdown(cdId, rental.endTime);
   });
 
   detailEl.style.display = 'block';
+}
+
+/* =======================
+   COUNTDOWN FUNCTION
+======================= */
+function startCountdown(elId, endTime){
+  const el = document.getElementById(elId);
+  const end = new Date(endTime).getTime();
+
+  function update(){
+    const now = Date.now();
+    const diff = end - now;
+
+    if(diff <= 0){
+      el.textContent = '⛔ Sewa habis';
+      el.className = 'countdown expired';
+      return;
+    }
+
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor((diff / (1000*60*60)) % 24);
+    const m = Math.floor((diff / (1000*60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    el.textContent = `⏳ ${d}h ${h}j ${m}m ${s}d`;
+    el.className = 'countdown active';
+  }
+
+  update();
+  setInterval(update,1000);
 }
 </script>
 
 </body>
 </html>
+
