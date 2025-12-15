@@ -7,25 +7,25 @@
 
 <style>
 :root{
-  --bg:#87cefa;              /* langit laut */
-  --card:#fff7cc;            /* kuning spons */
-  --accent:#ffdf00;          /* kuning spongebob */
-  --blue:#1e90ff;            /* laut */
-  --pink:#ff6fae;            /* patrick */
-  --green:#3cb371;           /* rumput laut */
+  --bg:#b7ddff;
+  --bg-deep:#7fb8f5;
+  --card:#fff7cc;
+  --accent:#ffdf00;
+  --blue:#1e90ff;
+  --pink:#ff6fae;
   --warn:#ff9800;
   --danger:#ff3b3b;
-  --shadow:0 12px 30px rgba(0,0,0,.25);
+  --shadow:0 12px 30px rgba(0,0,0,.22);
   font-family:'Comic Sans MS','Trebuchet MS',system-ui,sans-serif;
 }
-
 *{box-sizing:border-box}
 body{
   margin:0;
   background:
-    radial-gradient(circle at top,#b3ecff,#87cefa),
-    linear-gradient(180deg,#87cefa,#1e90ff);
+    radial-gradient(circle at top,#dff1ff,#b7ddff),
+    linear-gradient(180deg,#b7ddff,#7fb8f5);
   color:#2b2b2b;
+  overflow-x:hidden;
 }
 
 /* HEADER */
@@ -37,17 +37,9 @@ header{
   display:flex;justify-content:space-between;align-items:center;
   box-shadow:0 10px 25px rgba(0,0,0,.35);
 }
-header strong{
-  font-size:20px;
-  color:#2b2b2b;
-}
 
 /* LAYOUT */
-.container{
-  max-width:1100px;
-  margin:40px auto;
-  padding:20px;
-}
+.container{max-width:1100px;margin:40px auto;padding:20px}
 
 /* CARD */
 .card{
@@ -61,40 +53,54 @@ header strong{
 
 /* CUSTOMER */
 .customer{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:16px;
-  border-radius:22px;
-  cursor:pointer;
-  margin-bottom:14px;
+  display:flex;align-items:center;gap:14px;
+  padding:16px;border-radius:22px;
+  cursor:pointer;margin-bottom:14px;
   background:linear-gradient(135deg,#fff176,#ffeb3b);
   border:3px solid #fbc02d;
   box-shadow:0 10px 20px rgba(0,0,0,.25);
   transition:.25s;
 }
-.customer:hover{
-  transform:scale(1.03) rotate(-1deg);
-}
-.customer.active{
-  outline:4px solid var(--pink);
-}
+.customer:hover{transform:scale(1.03) rotate(-1deg)}
+.customer.active{outline:4px solid var(--pink)}
 
-/* AVATAR */
 .avatar{
   width:48px;height:48px;border-radius:50%;
   background:radial-gradient(circle,#fff176,#fbc02d);
   border:3px solid #1e90ff;
-  color:#1e90ff;
-  font-weight:900;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  color:#1e90ff;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
 }
 
-/* DETAIL */
-.detail{display:none}
-.detail.show{display:block}
+/* DETAIL (CENTERED MODAL) */
+.detail{
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-45%);
+  opacity:0;
+  transition:.25s ease;
+  z-index:60;
+  max-width:760px;
+  width:calc(100% - 40px);
+}
+.detail.show{
+  display:block;
+  opacity:1;
+  transform:translate(-50%,-50%);
+}
+
+/* OVERLAY */
+.detail-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.25);
+  backdrop-filter:blur(2px);
+  display:none;
+  z-index:55;
+}
+.detail-overlay.show{display:block}
 
 /* PRODUCT */
 .product{
@@ -107,270 +113,214 @@ header strong{
 }
 
 /* TIME */
-.time-box{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-  margin:16px 0;
-}
+.time-box{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
 .time{
-  background:#ffffff;
-  border-radius:18px;
-  padding:14px;
+  background:#ffffff;border-radius:18px;padding:14px;
   border:3px dotted #64b5f6;
 }
-.time small{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  font-size:11px;
-  font-weight:800;
-  color:#1e90ff;
-}
-.time span{
-  display:block;
-  margin-top:6px;
-  font-weight:900;
-  font-size:14px;
-  color:#2b2b2b;
-}
+.time small{font-size:11px;font-weight:800;color:#1e90ff}
+.time span{display:block;margin-top:6px;font-weight:900}
 
 /* BADGE */
-.badge{
-  font-size:11px;
-  padding:6px 12px;
-  border-radius:999px;
-  font-weight:900;
-  margin-left:8px;
-}
+.badge{font-size:11px;padding:6px 12px;border-radius:999px;font-weight:900;margin-left:8px}
 .badge.warn{background:#ff9800;color:#fff}
 .badge.exp{background:#ff3b3b;color:#fff}
 
 /* PHONE */
-.phone{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:14px;
-}
-.phone span{
-  font-weight:900;
-  color:#1e90ff;
-}
+.phone{display:flex;align-items:center;gap:10px;margin-top:14px}
+.phone span{font-weight:900;color:#1e90ff}
 .btn-phone{
-  border:0;
-  border-radius:14px;
-  padding:6px 14px;
-  cursor:pointer;
-  font-weight:900;
+  border:0;border-radius:14px;padding:6px 14px;
+  cursor:pointer;font-weight:900;
   background:linear-gradient(135deg,#ff6fae,#ff8fd3);
   color:#fff;
 }
 
 /* PIN MODAL */
 .pin-overlay{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:100;
+  position:fixed;inset:0;background:rgba(0,0,0,.6);
+  display:none;align-items:center;justify-content:center;z-index:100;
 }
 .pin-modal{
-  background:#fff9c4;
-  border-radius:26px;
-  padding:26px;
-  width:320px;
+  background:#fff9c4;border-radius:26px;padding:26px;width:320px;
   border:4px dashed #fbc02d;
   box-shadow:0 25px 60px rgba(0,0,0,.5);
 }
-.pin-modal h3{
-  margin:0 0 12px;
-  color:#1e90ff;
-  text-align:center;
-}
 .pin-modal input{
-  width:100%;
-  padding:12px;
-  border-radius:14px;
-  border:3px solid #64b5f6;
-  background:#ffffff;
-  font-size:18px;
-  letter-spacing:4px;
-  text-align:center;
+  width:100%;padding:12px;border-radius:14px;
+  border:3px solid #64b5f6;font-size:18px;text-align:center;
 }
 .pin-modal button{
-  width:100%;
-  margin-top:16px;
-  padding:12px;
-  border-radius:14px;
-  border:0;
+  width:100%;margin-top:12px;
+  border:0;border-radius:14px;padding:10px;
   background:linear-gradient(135deg,#ffeb3b,#ffdf00);
-  font-weight:900;
-  cursor:pointer;
+  font-weight:900;cursor:pointer;
 }
-.pin-error{
-  color:#ff3b3b;
-  font-size:13px;
-  margin-top:8px;
-  display:none;
-  text-align:center;
+.pin-error{color:#ff3b3b;font-size:13px;display:none;text-align:center}
+
+/* BUBBLES */
+.bubbles{
+  position:fixed;inset:0;overflow:hidden;
+  z-index:-1;pointer-events:none;
+}
+.bubble{
+  position:absolute;bottom:-120px;
+  background:rgba(180,230,255,.45);
+  border-radius:50%;
+  animation:floatUp linear infinite;
+}
+@keyframes floatUp{
+  0%{transform:translateY(0) scale(.8);opacity:.6}
+  100%{transform:translateY(-120vh) scale(1.2);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
+<div class="bubbles"></div>
+
 <header>
   <strong>🍍 Daftar Pelanggan</strong>
-  <span style="font-weight:900;color:#1e90ff">Bikini Bottom Edition</span>
+  <span style="font-weight:900;color:#1e90ff">Bikini Bottom</span>
 </header>
 
 <div class="container">
-
   <div class="card">
     <h3>Nama Pelanggan</h3>
     <div id="customer-list"></div>
   </div>
+</div>
 
-  <div class="card detail" id="detail">
-    <h3 id="cust-name"></h3>
-    <div id="product-list"></div>
-  </div>
+<!-- OVERLAY -->
+<div class="detail-overlay" id="detailOverlay"></div>
 
+<!-- DETAIL CARD -->
+<div class="card detail" id="detail">
+  <h3 id="cust-name"></h3>
+  <div id="product-list"></div>
 </div>
 
 <!-- PIN MODAL -->
 <div class="pin-overlay" id="pinOverlay">
   <div class="pin-modal">
     <h3>Masukkan PIN</h3>
-    <input type="password" id="pinInput" maxlength="6" placeholder="••••">
+    <input type="password" id="pinInput" placeholder="••••">
     <div class="pin-error" id="pinError">PIN salah</div>
-    <button onclick="checkPin()">Buka Nomor</button>
+    <button type="button" onclick="checkPin(event)">Buka</button>
   </div>
 </div>
 
 <script>
-const ACCESS_PIN = '1234';
-let currentPhone = '';
+const ACCESS_PIN='1234';
+let currentPhone='';
 
 const products=[
  {id:1,name:'Kopi Arabica'},
- {id:2,name:'Tas Kanvas'},
- {id:3,name:'Lampu LED'}
+ {id:2,name:'Tas Kanvas'}
 ];
-
 const customers=[
- {
-  name:'Andi Pratama',
-  phone:'081234567890',
-  rentals:[
-   {productId:1,start:'2025-12-18T08:00:00',end:'2025-12-20T18:00:00'}
-  ]
- },
- {
-  name:'Siti Aisyah',
-  phone:'089876543210',
-  rentals:[
-   {productId:2,start:'2025-12-14T09:00:00',end:'2025-12-15T09:00:00'}
-  ]
- }
+ {name:'Andi Pratama',phone:'081234567890',rentals:[{productId:1,start:'2025-12-18T08:00',end:'2025-12-20T18:00'}]},
+ {name:'Siti Aisyah',phone:'089876543210',rentals:[{productId:2,start:'2025-12-14T09:00',end:'2025-12-15T09:00'}]}
 ];
 
 const list=document.getElementById('customer-list');
 const detail=document.getElementById('detail');
+const overlay=document.getElementById('detailOverlay');
 const cname=document.getElementById('cust-name');
 const plist=document.getElementById('product-list');
+const pinOverlay=document.getElementById('pinOverlay');
+const pinInput=document.getElementById('pinInput');
+const pinError=document.getElementById('pinError');
 
-function formatDateTime(dt){
-  return new Date(dt).toLocaleString('id-ID',{
-    weekday:'long',
-    day:'2-digit',
-    month:'long',
-    year:'numeric',
-    hour:'2-digit',
-    minute:'2-digit'
-  });
+function formatDate(d){
+ return new Date(d).toLocaleString('id-ID',{weekday:'long',day:'2-digit',month:'long',hour:'2-digit',minute:'2-digit'});
 }
+function maskPhone(p){return p.slice(0,2)+'••••••'+p.slice(-3)}
 
 customers.forEach(c=>{
- const div=document.createElement('div');
- div.className='customer';
- div.innerHTML=`<div class="avatar">${c.name[0]}</div><strong>${c.name}</strong>`;
- div.onclick=()=>showDetail(c,div);
- list.appendChild(div);
+ const el=document.createElement('div');
+ el.className='customer';
+ el.innerHTML=`<div class="avatar">${c.name[0]}</div><strong>${c.name}</strong>`;
+ el.onclick=()=>showDetail(c,el);
+ list.appendChild(el);
 });
-
-function maskPhone(p){
- return p.slice(0,2)+'••••••'+p.slice(-3);
-}
 
 function showDetail(c,el){
  document.querySelectorAll('.customer').forEach(x=>x.classList.remove('active'));
  el.classList.add('active');
-
  cname.textContent=c.name;
  plist.innerHTML='';
  detail.classList.add('show');
+ overlay.classList.add('show');
 
  c.rentals.forEach(r=>{
   const p=products.find(x=>x.id===r.productId);
-  if(!p) return;
-
-  const now=Date.now();
-  const end=new Date(r.end).getTime();
-  const left=end-now;
-
-  let badge='';
-  if(left<=0) badge='<span class="badge exp">HABIS</span>';
-  else if(left<86400000) badge='<span class="badge warn">HAMPIR HABIS</span>';
-
-  const box=document.createElement('div');
-  box.className='product';
-  box.innerHTML=`
+  const left=new Date(r.end)-Date.now();
+  const badge=left<=0?'<span class="badge exp">HABIS</span>':left<86400000?'<span class="badge warn">HAMPIR HABIS</span>':'';
+  plist.innerHTML+=`
+   <div class="product">
     <strong>${p.name}</strong>${badge}
-
     <div class="time-box">
-      <div class="time">
-        <small>📅 Mulai Sewa</small>
-        <span>${formatDateTime(r.start)}</span>
-      </div>
-      <div class="time">
-        <small>⏰ Berakhir</small>
-        <span>${formatDateTime(r.end)}</span>
-      </div>
+      <div class="time"><small>Mulai</small><span>${formatDate(r.start)}</span></div>
+      <div class="time"><small>Berakhir</small><span>${formatDate(r.end)}</span></div>
     </div>
-
     <div class="phone">
       <span id="phoneText">${maskPhone(c.phone)}</span>
-      <button class="btn-phone" onclick="openPin('${c.phone}')">Lihat No. HP</button>
+      <button class="btn-phone" onclick="openPin('${c.phone}')">No HP</button>
     </div>
-  `;
-  plist.appendChild(box);
+   </div>`;
  });
 }
 
-function openPin(phone){
- currentPhone = phone;
- document.getElementById('pinInput').value='';
- document.getElementById('pinError').style.display='none';
- document.getElementById('pinOverlay').style.display='flex';
+/* CLOSE DETAIL */
+function closeDetail(){
+ detail.classList.remove('show');
+ overlay.classList.remove('show');
+ document.querySelectorAll('.customer').forEach(x=>x.classList.remove('active'));
 }
-function checkPin(){
- if(document.getElementById('pinInput').value===ACCESS_PIN){
+overlay.onclick=closeDetail;
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape') closeDetail();
+});
+
+/* PIN */
+function openPin(p){
+ currentPhone=p;
+ pinInput.value='';
+ pinError.style.display='none';
+ pinOverlay.style.display='flex';
+ setTimeout(()=>pinInput.focus(),50);
+}
+function checkPin(e){
+ if(e) e.stopPropagation();
+ if(pinInput.value===ACCESS_PIN){
   document.getElementById('phoneText').textContent=currentPhone;
   closePin();
- }else{
-  document.getElementById('pinError').style.display='block';
- }
+ }else pinError.style.display='block';
 }
-function closePin(){
- document.getElementById('pinOverlay').style.display='none';
-}
-document.getElementById('pinOverlay').onclick=e=>{
- if(e.target.id==='pinOverlay') closePin();
-};
+function closePin(){pinOverlay.style.display='none'}
+pinOverlay.addEventListener('click',e=>{
+ if(e.target===pinOverlay) closePin();
+});
+pinInput.addEventListener('keydown',e=>{
+ if(e.key==='Enter') checkPin(e);
+});
+
+/* BUBBLES */
+const wrap=document.querySelector('.bubbles');
+setInterval(()=>{
+ const b=document.createElement('span');
+ b.className='bubble';
+ const s=Math.random()*40+10;
+ b.style.width=b.style.height=s+'px';
+ b.style.left=Math.random()*100+'%';
+ b.style.animationDuration=(Math.random()*10+8)+'s';
+ wrap.appendChild(b);
+ setTimeout(()=>b.remove(),18000);
+},700);
 </script>
 
 </body>
 </html>
+
