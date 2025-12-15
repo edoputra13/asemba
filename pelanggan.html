@@ -7,162 +7,214 @@
 
 <style>
 :root{
-  --bg:#f1f5fb;
-  --card:#ffffff;
-  --soft:#eef4ff;
-  --shadow:0 14px 40px rgba(15,23,42,.1);
-  --warn:#f59e0b;
-  --danger:#ef4444;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --bg:#87cefa;              /* langit laut */
+  --card:#fff7cc;            /* kuning spons */
+  --accent:#ffdf00;          /* kuning spongebob */
+  --blue:#1e90ff;            /* laut */
+  --pink:#ff6fae;            /* patrick */
+  --green:#3cb371;           /* rumput laut */
+  --warn:#ff9800;
+  --danger:#ff3b3b;
+  --shadow:0 12px 30px rgba(0,0,0,.25);
+  font-family:'Comic Sans MS','Trebuchet MS',system-ui,sans-serif;
 }
 
 *{box-sizing:border-box}
 body{
   margin:0;
-  background:linear-gradient(180deg,var(--soft),var(--bg));
-  color:#0f172a;
+  background:
+    radial-gradient(circle at top,#b3ecff,#87cefa),
+    linear-gradient(180deg,#87cefa,#1e90ff);
+  color:#2b2b2b;
 }
 
 /* HEADER */
 header{
   position:sticky;top:0;z-index:50;
-  padding:16px 22px;
-  background:linear-gradient(135deg,#cfe7ff,#ffffff,#e0f2fe);
-  border-radius:0 0 24px 24px;
+  padding:18px 26px;
+  background:linear-gradient(135deg,#ffeb3b,#ffdf00);
+  border-radius:0 0 30px 30px;
   display:flex;justify-content:space-between;align-items:center;
-  box-shadow:var(--shadow);
+  box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+header strong{
+  font-size:20px;
+  color:#2b2b2b;
 }
 
 /* LAYOUT */
-.container{max-width:1000px;margin:36px auto;padding:20px}
+.container{
+  max-width:1100px;
+  margin:40px auto;
+  padding:20px;
+}
 
 /* CARD */
 .card{
   background:var(--card);
-  border-radius:20px;
+  border-radius:28px;
   box-shadow:var(--shadow);
-  padding:20px;
-  margin-bottom:20px;
+  padding:24px;
+  margin-bottom:26px;
+  border:4px dashed #ffd54f;
 }
-
-/* SEARCH */
-#search-customer{
-  width:100%;
-  padding:10px 14px;
-  border-radius:12px;
-  border:1px solid #cbd5e1;
-  margin-bottom:10px;
-  font-size:14px;
-  outline:none;
-}
-#search-customer:focus{
-  border-color:#60a5fa;
-  box-shadow:0 0 0 3px rgba(96,165,250,.25);
-}
-
-/* SEARCH HISTORY */
-#search-history{
-  display:none;
-  background:#fff;
-  border-radius:12px;
-  box-shadow:0 8px 20px rgba(15,23,42,.08);
-  padding:8px;
-  margin-bottom:14px;
-}
-.history-item{
-  padding:8px 10px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:600;
-}
-.history-item:hover{background:#eef2ff}
 
 /* CUSTOMER */
 .customer{
-  display:flex;align-items:center;gap:12px;
-  padding:14px;border-radius:16px;
-  cursor:pointer;margin-bottom:10px;
-  background:linear-gradient(135deg,#f8fafc,var(--soft));
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px;
+  border-radius:22px;
+  cursor:pointer;
+  margin-bottom:14px;
+  background:linear-gradient(135deg,#fff176,#ffeb3b);
+  border:3px solid #fbc02d;
+  box-shadow:0 10px 20px rgba(0,0,0,.25);
+  transition:.25s;
 }
+.customer:hover{
+  transform:scale(1.03) rotate(-1deg);
+}
+.customer.active{
+  outline:4px solid var(--pink);
+}
+
+/* AVATAR */
 .avatar{
-  width:42px;height:42px;border-radius:50%;
-  background:linear-gradient(135deg,#60a5fa,#2563eb);
-  color:#fff;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
+  width:48px;height:48px;border-radius:50%;
+  background:radial-gradient(circle,#fff176,#fbc02d);
+  border:3px solid #1e90ff;
+  color:#1e90ff;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 /* DETAIL */
-.detail{
-  display:none;
-  transition:opacity .2s ease, transform .2s ease;
-}
-.detail.show{
-  display:block;
-  opacity:1;
-  transform:translateY(0);
-}
+.detail{display:none}
+.detail.show{display:block}
 
 /* PRODUCT */
 .product{
-  background:#f9fbff;
-  border-radius:16px;
-  padding:14px 16px;
-  margin-bottom:14px;
-  box-shadow:0 6px 20px rgba(15,23,42,.08);
+  background:linear-gradient(135deg,#ffffff,#fff9c4);
+  border-radius:22px;
+  padding:20px;
+  margin-bottom:18px;
+  border:3px solid #ffe082;
+  box-shadow:0 8px 18px rgba(0,0,0,.25);
 }
 
-/* PROGRESS */
-.progress{
-  height:6px;background:#e5e7eb;
-  border-radius:999px;overflow:hidden;
-  margin-top:8px;
+/* TIME */
+.time-box{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin:16px 0;
 }
-.progress div{
-  height:100%;
-  background:linear-gradient(90deg,#22c55e,#4ade80);
+.time{
+  background:#ffffff;
+  border-radius:18px;
+  padding:14px;
+  border:3px dotted #64b5f6;
+}
+.time small{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:11px;
+  font-weight:800;
+  color:#1e90ff;
+}
+.time span{
+  display:block;
+  margin-top:6px;
+  font-weight:900;
+  font-size:14px;
+  color:#2b2b2b;
 }
 
 /* BADGE */
 .badge{
   font-size:11px;
-  padding:4px 8px;
+  padding:6px 12px;
   border-radius:999px;
-  font-weight:700;
-  margin-left:6px;
-  display:inline-flex;
+  font-weight:900;
+  margin-left:8px;
+}
+.badge.warn{background:#ff9800;color:#fff}
+.badge.exp{background:#ff3b3b;color:#fff}
+
+/* PHONE */
+.phone{
+  display:flex;
   align-items:center;
+  gap:10px;
+  margin-top:14px;
+}
+.phone span{
+  font-weight:900;
+  color:#1e90ff;
+}
+.btn-phone{
+  border:0;
+  border-radius:14px;
+  padding:6px 14px;
+  cursor:pointer;
+  font-weight:900;
+  background:linear-gradient(135deg,#ff6fae,#ff8fd3);
+  color:#fff;
 }
 
-/* HABIS */
-.badge.exp{
-  background:#fee2e2;
-  color:#991b1b;
+/* PIN MODAL */
+.pin-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
 }
-
-/* HAMPIR HABIS */
-.badge.warn{
-  background:#fef3c7;
-  color:#92400e;
-  position:relative;
-  overflow:hidden;
-  animation:pulse 1.6s infinite;
+.pin-modal{
+  background:#fff9c4;
+  border-radius:26px;
+  padding:26px;
+  width:320px;
+  border:4px dashed #fbc02d;
+  box-shadow:0 25px 60px rgba(0,0,0,.5);
 }
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(245,158,11,.5)}
-  70%{box-shadow:0 0 0 8px rgba(245,158,11,0)}
-  100%{box-shadow:0 0 0 0 rgba(245,158,11,0)}
+.pin-modal h3{
+  margin:0 0 12px;
+  color:#1e90ff;
+  text-align:center;
 }
-.badge-text{
-  display:inline-block;
-  white-space:nowrap;
-  animation:fadeSwap 5s infinite;
+.pin-modal input{
+  width:100%;
+  padding:12px;
+  border-radius:14px;
+  border:3px solid #64b5f6;
+  background:#ffffff;
+  font-size:18px;
+  letter-spacing:4px;
+  text-align:center;
 }
-@keyframes fadeSwap{
-  0%{opacity:1}
-  45%{opacity:1}
-  50%{opacity:0;transform:translateY(-4px)}
-  60%{opacity:1;transform:none}
-  100%{opacity:1}
+.pin-modal button{
+  width:100%;
+  margin-top:16px;
+  padding:12px;
+  border-radius:14px;
+  border:0;
+  background:linear-gradient(135deg,#ffeb3b,#ffdf00);
+  font-weight:900;
+  cursor:pointer;
+}
+.pin-error{
+  color:#ff3b3b;
+  font-size:13px;
+  margin-top:8px;
+  display:none;
+  text-align:center;
 }
 </style>
 </head>
@@ -170,17 +222,14 @@ header{
 <body>
 
 <header>
-  <strong>Daftar Customer</strong>
+  <strong>🍍 Daftar Pelanggan</strong>
+  <span style="font-weight:900;color:#1e90ff">Bikini Bottom Edition</span>
 </header>
 
 <div class="container">
 
   <div class="card">
-    <h3>Nama Customer</h3>
-
-    <input id="search-customer" placeholder="Cari nama pelanggan...">
-    <div id="search-history"></div>
-
+    <h3>Nama Pelanggan</h3>
     <div id="customer-list"></div>
   </div>
 
@@ -191,126 +240,137 @@ header{
 
 </div>
 
+<!-- PIN MODAL -->
+<div class="pin-overlay" id="pinOverlay">
+  <div class="pin-modal">
+    <h3>Masukkan PIN</h3>
+    <input type="password" id="pinInput" maxlength="6" placeholder="••••">
+    <div class="pin-error" id="pinError">PIN salah</div>
+    <button onclick="checkPin()">Buka Nomor</button>
+  </div>
+</div>
+
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+const ACCESS_PIN = '1234';
+let currentPhone = '';
 
-  const HISTORY_KEY='customer_search_history';
+const products=[
+ {id:1,name:'Kopi Arabica'},
+ {id:2,name:'Tas Kanvas'},
+ {id:3,name:'Lampu LED'}
+];
 
-  const products=[
-    {id:1,name:'Disney'},
-    {id:2,name:'Disney'},
-    {id:3,name:'Disney'},
-    {id:4,name:'Disney'}
-  ];
+const customers=[
+ {
+  name:'Andi Pratama',
+  phone:'081234567890',
+  rentals:[
+   {productId:1,start:'2025-12-18T08:00:00',end:'2025-12-20T18:00:00'}
+  ]
+ },
+ {
+  name:'Siti Aisyah',
+  phone:'089876543210',
+  rentals:[
+   {productId:2,start:'2025-12-14T09:00:00',end:'2025-12-15T09:00:00'}
+  ]
+ }
+];
 
-  const customers=[
-    {name:'Andi Pratama',rentals:[
-      {productId:1,end:'2025-12-20T18:00:00'},
-      {productId:3,end:'2025-12-18T12:00:00'}
-    ]},
-    {name:'Siti Aisyah',rentals:[
-      {productId:2,end:'2025-12-15T09:00:00'}
-    ]}
-  ];
+const list=document.getElementById('customer-list');
+const detail=document.getElementById('detail');
+const cname=document.getElementById('cust-name');
+const plist=document.getElementById('product-list');
 
-  const list=document.getElementById('customer-list');
-  const detail=document.getElementById('detail');
-  const cname=document.getElementById('cust-name');
-  const plist=document.getElementById('product-list');
-  const searchInput=document.getElementById('search-customer');
-  const historyBox=document.getElementById('search-history');
-
-  /* Render pelanggan */
-  customers.forEach(c=>{
-    const div=document.createElement('div');
-    div.className='customer';
-    div.innerHTML=`<div class="avatar">${c.name[0]}</div><strong>${c.name}</strong>`;
-    div.onclick=()=>showDetail(c);
-    list.appendChild(div);
+function formatDateTime(dt){
+  return new Date(dt).toLocaleString('id-ID',{
+    weekday:'long',
+    day:'2-digit',
+    month:'long',
+    year:'numeric',
+    hour:'2-digit',
+    minute:'2-digit'
   });
+}
 
-  function showDetail(c){
-    cname.textContent=c.name;
-    plist.innerHTML='';
-    detail.classList.add('show');
-
-    c.rentals.forEach(r=>{
-      const p=products.find(x=>x.id===r.productId);
-      if(!p) return;
-
-      const now=Date.now();
-      const end=new Date(r.end).getTime();
-      const left=end-now;
-
-      let percent=left>0?Math.min(100,Math.max(5,(left/(left+86400000))*100)):0;
-
-      let badge='';
-      if(left<=0){
-        badge='<span class="badge exp">HABIS</span>';
-      }else if(left<86400000){
-        const endDate=new Date(r.end).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
-        badge=`<span class="badge warn">
-          <span class="badge-text">HAMPIR HABIS</span>
-          <span class="badge-text">: ${endDate}</span>
-        </span>`;
-      }
-
-      const box=document.createElement('div');
-      box.className='product';
-      box.innerHTML=`
-        <strong>${p.name}</strong>${badge}
-        <div class="progress"><div style="width:${percent}%"></div></div>
-      `;
-      plist.appendChild(box);
-    });
-  }
-
-  /* Klik sembarang untuk menutup detail */
-  document.addEventListener('click',e=>{
-    if(!detail.classList.contains('show')) return;
-    if(!e.target.closest('.customer') && !e.target.closest('#detail')){
-      detail.classList.remove('show');
-    }
-  });
-
-  /* SEARCH + HISTORY */
-  function getHistory(){return JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');}
-  function saveHistory(t){
-    if(!t) return;
-    let h=getHistory().filter(x=>x!==t);
-    h.unshift(t); h=h.slice(0,5);
-    localStorage.setItem(HISTORY_KEY,JSON.stringify(h));
-  }
-  function renderHistory(){
-    const h=getHistory();
-    if(!h.length){historyBox.style.display='none';return;}
-    historyBox.innerHTML=h.map(x=>`<div class="history-item">${x}</div>`).join('');
-    historyBox.style.display='block';
-    historyBox.querySelectorAll('.history-item').forEach(i=>{
-      i.onclick=()=>{
-        searchInput.value=i.textContent;
-        filterCustomers(i.textContent);
-        historyBox.style.display='none';
-      };
-    });
-  }
-  function filterCustomers(t){
-    t=t.toLowerCase();
-    document.querySelectorAll('.customer').forEach(c=>{
-      c.style.display=c.textContent.toLowerCase().includes(t)?'flex':'none';
-    });
-  }
-
-  searchInput.addEventListener('input',()=>filterCustomers(searchInput.value));
-  searchInput.addEventListener('focus',renderHistory);
-  searchInput.addEventListener('blur',()=>setTimeout(()=>{
-    saveHistory(searchInput.value.trim());
-    historyBox.style.display='none';
-  },200));
-
+customers.forEach(c=>{
+ const div=document.createElement('div');
+ div.className='customer';
+ div.innerHTML=`<div class="avatar">${c.name[0]}</div><strong>${c.name}</strong>`;
+ div.onclick=()=>showDetail(c,div);
+ list.appendChild(div);
 });
+
+function maskPhone(p){
+ return p.slice(0,2)+'••••••'+p.slice(-3);
+}
+
+function showDetail(c,el){
+ document.querySelectorAll('.customer').forEach(x=>x.classList.remove('active'));
+ el.classList.add('active');
+
+ cname.textContent=c.name;
+ plist.innerHTML='';
+ detail.classList.add('show');
+
+ c.rentals.forEach(r=>{
+  const p=products.find(x=>x.id===r.productId);
+  if(!p) return;
+
+  const now=Date.now();
+  const end=new Date(r.end).getTime();
+  const left=end-now;
+
+  let badge='';
+  if(left<=0) badge='<span class="badge exp">HABIS</span>';
+  else if(left<86400000) badge='<span class="badge warn">HAMPIR HABIS</span>';
+
+  const box=document.createElement('div');
+  box.className='product';
+  box.innerHTML=`
+    <strong>${p.name}</strong>${badge}
+
+    <div class="time-box">
+      <div class="time">
+        <small>📅 Mulai Sewa</small>
+        <span>${formatDateTime(r.start)}</span>
+      </div>
+      <div class="time">
+        <small>⏰ Berakhir</small>
+        <span>${formatDateTime(r.end)}</span>
+      </div>
+    </div>
+
+    <div class="phone">
+      <span id="phoneText">${maskPhone(c.phone)}</span>
+      <button class="btn-phone" onclick="openPin('${c.phone}')">Lihat No. HP</button>
+    </div>
+  `;
+  plist.appendChild(box);
+ });
+}
+
+function openPin(phone){
+ currentPhone = phone;
+ document.getElementById('pinInput').value='';
+ document.getElementById('pinError').style.display='none';
+ document.getElementById('pinOverlay').style.display='flex';
+}
+function checkPin(){
+ if(document.getElementById('pinInput').value===ACCESS_PIN){
+  document.getElementById('phoneText').textContent=currentPhone;
+  closePin();
+ }else{
+  document.getElementById('pinError').style.display='block';
+ }
+}
+function closePin(){
+ document.getElementById('pinOverlay').style.display='none';
+}
+document.getElementById('pinOverlay').onclick=e=>{
+ if(e.target.id==='pinOverlay') closePin();
+};
 </script>
 
 </body>
 </html>
-
