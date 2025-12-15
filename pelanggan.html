@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Daftar Pelanggan</title>
+<title>LIST CUSTOMER</title>
 
 <style>
 :root{
@@ -181,13 +181,13 @@ header{
 <div class="bubbles"></div>
 
 <header>
-  <strong>🍍 Daftar Pelanggan</strong>
-  <span style="font-weight:900;color:#1e90ff">Bikini Bottom</span>
+  <strong>🍍 LIST PELANGGAN</strong>
+  <span style="font-weight:900;color:#1e90ff">DEEPA</span>
 </header>
 
 <div class="container">
   <div class="card">
-    <h3>Nama Pelanggan</h3>
+    <h3>Name Customer</h3>
     <div id="customer-list"></div>
   </div>
 </div>
@@ -212,16 +212,16 @@ header{
 </div>
 
 <script>
-const ACCESS_PIN='1234';
+const ACCESS_PIN='3624';
 let currentPhone='';
 
 const products=[
- {id:1,name:'Kopi Arabica'},
- {id:2,name:'Tas Kanvas'}
+ {id:1,name:'Disney'},
+ {id:2,name:'WA Garansi'}
 ];
 const customers=[
- {name:'Andi Pratama',phone:'081234567890',rentals:[{productId:1,start:'2025-12-18T08:00',end:'2025-12-20T18:00'}]},
- {name:'Siti Aisyah',phone:'089876543210',rentals:[{productId:2,start:'2025-12-14T09:00',end:'2025-12-15T09:00'}]}
+ {name:'Buto Ijo',phone:'081234567890',rentals:[{productId:1,start:'2025-12-18T08:00',end:'2025-12-20T18:00'}]},
+ {name:'Trump',phone:'089876543210',rentals:[{productId:2,start:'2025-12-14T09:00',end:'2025-12-15T09:00'}]}
 ];
 
 const list=document.getElementById('customer-list');
