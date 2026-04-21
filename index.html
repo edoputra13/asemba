@@ -11,7 +11,13 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            background-color: #f5f5f5; 
+            /* Background Kotak-Kotak Estetik */
+            background-color: #f5f5f5;
+            background-image: 
+                linear-gradient(#e1e1e1 1px, transparent 1px),
+                linear-gradient(90deg, #e1e1e1 1px, transparent 1px);
+            background-size: 20px 20px;
+            
             color: #333; 
             line-height: 1.6;
             font-family: 'Courier New', Courier, monospace; 
@@ -34,28 +40,34 @@
             border: 1.5px solid #333;
             background: #fff;
         }
-        .profile-info b { font-size: 1.3rem; display: block; font-weight: bold; color: #000; }
+        
+        /* Nama Profil tetap Segoe UI */
+        .profile-info b { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.4rem; 
+            display: block; 
+            font-weight: bold; 
+            color: #000; 
+            letter-spacing: -0.5px;
+        }
         .profile-info span { font-weight: normal; color: #666; font-size: 0.85rem; }
 
         /* Main Content */
-        .container { max-width: 800px; margin: 0 auto; padding: 0 20px 40px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px 40px; position: relative; }
 
-        /* Kotak Deskripsi */
+        /* Kotak Deskripsi tetap Helvetica */
         .description {
             text-align: center;
             background: #ffffff; 
             padding: 25px;
             border-radius: 4px;
-            margin-bottom: 20px; /* Jarak ke slider */
+            margin-bottom: 20px;
             border: 1px solid #ddd;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
-        .description p {
-            font-size: 1rem;
-            color: #444;
-        }
+        .description p { font-size: 1rem; color: #444; }
 
-        /* Styling Highlight Photo Slide (Slider) */
+        /* Highlight Photo Slide */
         .highlight-slider {
             width: 100%;
             overflow: hidden;
@@ -76,33 +88,24 @@
         .slider-track {
             display: flex;
             gap: 10px;
-            /* Animasi geser otomatis */
             animation: scrollSlider 20s linear infinite;
         }
-        /* Double width track untuk seamless looping */
-        .slider-track:hover {
-            animation-play-state: paused; /* Berhenti saat di-hover */
-        }
+        .slider-track:hover { animation-play-state: paused; }
         .slider-item {
-            flex: 0 0 250px; /* Lebar foto slide */
+            flex: 0 0 250px;
             height: 150px;
             object-fit: cover;
             border: 1px solid #eee;
             cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .slider-item:hover {
-            transform: scale(1.02);
-            border-color: #333;
+            transition: 0.2s;
         }
 
-        /* Keyframes untuk Animasi Slider */
         @keyframes scrollSlider {
             0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-260px * 4)); } /* - (lebar+gap) * jumlah_foto_asli */
+            100% { transform: translateX(calc(-260px * 4)); }
         }
 
-        /* Tombol */
+        /* Tombol tetap Saira Stencil */
         .action-buttons {
             display: flex;
             gap: 15px;
@@ -121,15 +124,19 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: none;
         }
-        .btn i {
+        
+        /* Ikon Berwarna */
+        .btn i.fa-whatsapp {
+            color: #25D366;
+            font-size: 1.4rem;
+        }
+        .btn i.fa-book-open {
+            color: #3498db; /* Warna Biru Katalog */
             font-size: 1.2rem;
         }
-        .btn:hover {
-            background: #333;
-            color: #fff;
-        }
+
+        .btn:hover { background: #333; color: #fff; }
 
         /* Testimonial Grid */
         h3 { 
@@ -152,14 +159,9 @@
             border: 1px solid #ccc;
             cursor: pointer;
             transition: 0.2s;
-            background: #fff;
-        }
-        .testi-item:hover { 
-            border-color: #000;
-            opacity: 0.8;
         }
 
-        /* Lightbox (Zoom Effect) */
+        /* Lightbox */
         #lightbox {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -170,19 +172,12 @@
             z-index: 1000;
             cursor: pointer;
         }
-        #lightbox img {
-            max-width: 90%;
-            max-height: 80%;
-            border: 1px solid #333;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
+        #lightbox img { max-width: 90%; max-height: 80%; border: 1px solid #333; }
 
         /* Responsive Mobile */
         @media (max-width: 480px) {
             .profile-img { width: 60px; height: 60px; }
             .testi-grid { grid-template-columns: repeat(3, 1fr); }
-            header { padding: 20px; }
-            .btn { font-size: 0.85rem; padding: 10px 15px; }
             .slider-item { flex: 0 0 180px; height: 120px; }
             @keyframes scrollSlider {
                 0% { transform: translateX(0); }
@@ -209,34 +204,30 @@
         <div class="highlight-slider">
             <div class="slider-title">>> FEATURED_PROJECTS</div>
             <div class="slider-track">
-                <img src="https://via.placeholder.com/500x300?text=Project+Alpha" class="slider-item" onclick="openLightbox(this.src)">
-                <img src="https://via.placeholder.com/500x300?text=Project+Beta" class="slider-item" onclick="openLightbox(this.src)">
-                <img src="https://via.placeholder.com/500x300?text=Project+Gamma" class="slider-item" onclick="openLightbox(this.src)">
-                <img src="https://via.placeholder.com/500x300?text=Project+Delta" class="slider-item" onclick="openLightbox(this.src)">
-                <img src="https://via.placeholder.com/500x300?text=Project+Alpha" class="slider-item" onclick="openLightbox(this.src)">
-                <img src="https://via.placeholder.com/500x300?text=Project+Beta" class="slider-item" onclick="openLightbox(this.src)">
-                <img src="https://via.placeholder.com/500x300?text=Project+Gamma" class="slider-item" onclick="openLightbox(this.src)">
-                <img src="https://via.placeholder.com/500x300?text=Project+Delta" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+1" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+2" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+3" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+4" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+1" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+2" class="slider-item" onclick="openLightbox(this.src)">
             </div>
         </div>
 
         <div class="action-buttons">
-            <a href="https://wa.me/yournumber" class="btn">
+            <a href="https://wa.me/628123456789" class="btn">
                 <i class="fab fa-whatsapp"></i> CONTACT
             </a>
             <a href="#" class="btn">
-                CATALOG
+                <i class="fas fa-book-open"></i> CATALOG
             </a>
         </div>
 
         <h3>-- LOG_TESTIMONI --</h3>
         <div class="testi-grid">
-            <img src="https://via.placeholder.com/300?text=TESTI_01" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://via.placeholder.com/300?text=TESTI_02" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://via.placeholder.com/300?text=TESTI_03" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://via.placeholder.com/300?text=TESTI_04" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://via.placeholder.com/300?text=TESTI_05" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://via.placeholder.com/300?text=TESTI_06" class="testi-item" onclick="openLightbox(this.src)">
+            <img src="https://via.placeholder.com/300?text=T_01" class="testi-item" onclick="openLightbox(this.src)">
+            <img src="https://via.placeholder.com/300?text=T_02" class="testi-item" onclick="openLightbox(this.src)">
+            <img src="https://via.placeholder.com/300?text=T_03" class="testi-item" onclick="openLightbox(this.src)">
+            <img src="https://via.placeholder.com/300?text=T_04" class="testi-item" onclick="openLightbox(this.src)">
         </div>
     </div>
 
@@ -245,12 +236,10 @@
     </div>
 
     <script>
-        // Fungsi Lightbox terpadu (untuk slider dan testi)
         function openLightbox(src) {
             document.getElementById('lightbox-img').src = src;
             document.getElementById('lightbox').style.display = 'flex';
         }
-
         function closeLightbox() {
             document.getElementById('lightbox').style.display = 'none';
         }
