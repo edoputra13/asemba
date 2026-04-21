@@ -40,16 +40,69 @@
         /* Main Content */
         .container { max-width: 800px; margin: 0 auto; padding: 0 20px 40px; }
 
+        /* Kotak Deskripsi */
         .description {
             text-align: center;
             background: #ffffff; 
             padding: 25px;
             border-radius: 4px;
-            margin-bottom: 30px;
+            margin-bottom: 20px; /* Jarak ke slider */
             border: 1px solid #ddd;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .description p {
+            font-size: 1rem;
+            color: #444;
         }
 
-        /* Tombol Tanpa Efek Bayangan */
+        /* Styling Highlight Photo Slide (Slider) */
+        .highlight-slider {
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            background: #fff;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .slider-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: bold;
+        }
+        .slider-track {
+            display: flex;
+            gap: 10px;
+            /* Animasi geser otomatis */
+            animation: scrollSlider 20s linear infinite;
+        }
+        /* Double width track untuk seamless looping */
+        .slider-track:hover {
+            animation-play-state: paused; /* Berhenti saat di-hover */
+        }
+        .slider-item {
+            flex: 0 0 250px; /* Lebar foto slide */
+            height: 150px;
+            object-fit: cover;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .slider-item:hover {
+            transform: scale(1.02);
+            border-color: #333;
+        }
+
+        /* Keyframes untuk Animasi Slider */
+        @keyframes scrollSlider {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-260px * 4)); } /* - (lebar+gap) * jumlah_foto_asli */
+        }
+
+        /* Tombol */
         .action-buttons {
             display: flex;
             gap: 15px;
@@ -58,7 +111,7 @@
         }
         .btn {
             padding: 12px 22px;
-            border: 2px solid #333; /* Border tegas tanpa bayangan */
+            border: 2px solid #333;
             text-decoration: none;
             color: #333;
             background: #fff;
@@ -68,7 +121,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: none; /* Menghapus bayangan */
+            box-shadow: none;
         }
         .btn i {
             font-size: 1.2rem;
@@ -76,7 +129,6 @@
         .btn:hover {
             background: #333;
             color: #fff;
-            transform: none; /* Menghapus efek angkat saat hover */
         }
 
         /* Testimonial Grid */
@@ -122,6 +174,7 @@
             max-width: 90%;
             max-height: 80%;
             border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         /* Responsive Mobile */
@@ -130,6 +183,11 @@
             .testi-grid { grid-template-columns: repeat(3, 1fr); }
             header { padding: 20px; }
             .btn { font-size: 0.85rem; padding: 10px 15px; }
+            .slider-item { flex: 0 0 180px; height: 120px; }
+            @keyframes scrollSlider {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(calc(-190px * 4)); }
+            }
         }
     </style>
 </head>
@@ -145,9 +203,22 @@
 
     <div class="container">
         <section class="description">
-            <p>> LOAD DESCRIPTION... <br> 
-               Mahasiswa tingkat akhir yang fokus pada pengembangan antarmuka web. Berikut adalah arsip proyek dan testimoni yang tersedia.</p>
+            <p>Mahasiswa tingkat akhir yang fokus pada pengembangan antarmuka web. Berikut adalah arsip proyek dan testimoni yang tersedia untuk tinjauan profesional.</p>
         </section>
+
+        <div class="highlight-slider">
+            <div class="slider-title">>> FEATURED_PROJECTS</div>
+            <div class="slider-track">
+                <img src="https://via.placeholder.com/500x300?text=Project+Alpha" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+Beta" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+Gamma" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+Delta" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+Alpha" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+Beta" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+Gamma" class="slider-item" onclick="openLightbox(this.src)">
+                <img src="https://via.placeholder.com/500x300?text=Project+Delta" class="slider-item" onclick="openLightbox(this.src)">
+            </div>
+        </div>
 
         <div class="action-buttons">
             <a href="https://wa.me/yournumber" class="btn">
@@ -160,12 +231,12 @@
 
         <h3>-- LOG_TESTIMONI --</h3>
         <div class="testi-grid">
-            <img src="https://via.placeholder.com/300?text=IMG_01" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://via.placeholder.com/300?text=IMG_02" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://via.placeholder.com/300?text=IMG_03" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://via.placeholder.com/300?text=IMG_04" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://via.placeholder.com/300?text=IMG_05" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://via.placeholder.com/300?text=IMG_06" class="testi-item" onclick="openLightbox(this.src)">
+            <img src="https://via.placeholder.com/300?text=TESTI_01" class="testi-item" onclick="openLightbox(this.src)">
+            <img src="https://via.placeholder.com/300?text=TESTI_02" class="testi-item" onclick="openLightbox(this.src)">
+            <img src="https://via.placeholder.com/300?text=TESTI_03" class="testi-item" onclick="openLightbox(this.src)">
+            <img src="https://via.placeholder.com/300?text=TESTI_04" class="testi-item" onclick="openLightbox(this.src)">
+            <img src="https://via.placeholder.com/300?text=TESTI_05" class="testi-item" onclick="openLightbox(this.src)">
+            <img src="https://via.placeholder.com/300?text=TESTI_06" class="testi-item" onclick="openLightbox(this.src)">
         </div>
     </div>
 
@@ -174,6 +245,7 @@
     </div>
 
     <script>
+        // Fungsi Lightbox terpadu (untuk slider dan testi)
         function openLightbox(src) {
             document.getElementById('lightbox-img').src = src;
             document.getElementById('lightbox').style.display = 'flex';
