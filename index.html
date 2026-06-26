@@ -31,15 +31,44 @@
             padding: 30px 20px;
             background: transparent;
         }
+
+        /* ==================== BORDER PROFIL DI-PERTIPIS ==================== */
+        .profile-container {
+            position: relative;
+            width: 72px; /* Ukuran wadah luar */
+            height: 72px;
+            margin-right: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        /* Efek garis warna berputar di balik foto profil */
+        .profile-container::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: conic-gradient(#ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            animation: rotate-rgb 6s linear infinite;
+        }
         .profile-img {
-            width: 70px;
-            height: 70px;
+            /* PERBAIKAN: Selisih diperkecil (72px - 69px = hanya sisa ~1.5px border per sisi) */
+            width: 69px; 
+            height: 69px;
             border-radius: 8px;
             object-fit: cover;
-            margin-right: 15px;
-            border: 1.5px solid #333;
+            z-index: 2; 
             background: #fff;
         }
+        /* Animasi rotasi melingkar untuk border */
+        @keyframes rotate-rgb {
+            100% { transform: rotate(360deg); }
+        }
+        /* ============================================================================== */
         
         /* Nama Profil tetap Segoe UI */
         .profile-info b { 
@@ -67,15 +96,15 @@
         }
         .description p { font-size: 1rem; color: #444; }
 
-        /* Highlight Photo Slide */
+        /* GALERI FOTO (MANUAL SLIDE) */
         .highlight-slider {
             width: 100%;
-            overflow: hidden;
             margin-bottom: 30px;
             border: 1px solid #ddd;
             background: #fff;
             padding: 10px;
             border-radius: 4px;
+            position: relative; 
         }
         .slider-title {
             font-size: 0.8rem;
@@ -85,12 +114,20 @@
             color: #555;
             font-weight: bold;
         }
+        .slider-container {
+            width: 100%;
+            overflow-x: auto; 
+            scroll-behavior: smooth; 
+            scrollbar-width: none; 
+        }
+        .slider-container::-webkit-scrollbar {
+            display: none; 
+        }
         .slider-track {
             display: flex;
             gap: 10px;
-            animation: scrollSlider 20s linear infinite;
+            scroll-snap-type: x mandatory; 
         }
-        .slider-track:hover { animation-play-state: paused; }
         .slider-item {
             flex: 0 0 250px;
             height: 150px;
@@ -98,12 +135,45 @@
             border: 1px solid #eee;
             cursor: pointer;
             transition: 0.2s;
+            scroll-snap-align: start; 
+        }
+        
+        /* TOMBOL NAVIGASI RGB */
+        .nav-btn {
+            position: absolute;
+            top: calc(50% + 10px);
+            transform: translateY(-50%);
+            border: none;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 6px; 
+            z-index: 5;
+            color: #fff;
+            font-size: 0.85rem; 
+            text-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            background-size: 400%;
+            animation: rgb-animation 15s linear infinite; 
+        }
+        
+        @keyframes rgb-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        @keyframes scrollSlider {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-260px * 4)); }
+        .nav-btn:hover { 
+            transform: translateY(-50%) scale(1.1);
         }
+        
+        .nav-btn.prev { left: -10px; } 
+        .nav-btn.next { right: -10px; }
 
         /* Tombol tetap Saira Stencil */
         .action-buttons {
@@ -132,7 +202,7 @@
             font-size: 1.4rem;
         }
         .btn i.fa-book-open {
-            color: #3498db; /* Warna Biru Katalog */
+            color: #3498db; 
             font-size: 1.2rem;
         }
 
@@ -176,20 +246,24 @@
 
         /* Responsive Mobile */
         @media (max-width: 480px) {
-            .profile-img { width: 60px; height: 60px; }
+            /* PERBAIKAN: Proporsi tipis di HP */
+            .profile-container { width: 62px; height: 62px; border-radius: 8px; }
+            .profile-img { width: 59px; height: 59px; border-radius: 6px; }
+            
             .testi-grid { grid-template-columns: repeat(3, 1fr); }
             .slider-item { flex: 0 0 180px; height: 120px; }
-            @keyframes scrollSlider {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(calc(-190px * 4)); }
-            }
+            .nav-btn { width: 28px; height: 28px; font-size: 0.75rem; border-radius: 5px; }
+            .nav-btn.prev { left: 5px; }
+            .nav-btn.next { right: 5px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <img src="polisi.jpg" alt="Profile" class="profile-img">
+        <div class="profile-container">
+            <img src="polisi.jpg" alt="Profile" class="profile-img">
+        </div>
         <div class="profile-info">
             <b>DEEPA STORE</b>
             <span>STATUS: Active</span>
@@ -203,13 +277,19 @@
 
         <div class="highlight-slider">
             <div class="slider-title">>> BIASANYA INFORMASI</div>
-            <div class="slider-track">
-                <img src="galeri1.jpg" class="slider-item" onclick="openLightbox(this.src)">
-                <img src="https://via.placeholder.com/500x300?text=Project+2" class="slider-item" onclick="openLightbox(this.src)">
-                <img src="https://via.placeholder.com/500x300?text=Project+3" class="slider-item" onclick="openLightbox(this.src)">
-                <img src="https://via.placeholder.com/500x300?text=Project+4" class="slider-item" onclick="openLightbox(this.src)">
-                <img src="https://via.placeholder.com/500x300?text=Project+1" class="slider-item" onclick="openLightbox(this.src)">
-                <img src="https://via.placeholder.com/500x300?text=Project+2" class="slider-item" onclick="openLightbox(this.src)">
+            
+            <button class="nav-btn prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+            
+            <div class="slider-container" id="sliderContainer">
+                <div class="slider-track">
+                    <img src="galeri1.jpg" class="slider-item" onclick="openLightbox(this.src)">
+                    <img src="https://via.placeholder.com/500x300?text=Project+2" class="slider-item" onclick="openLightbox(this.src)">
+                    <img src="https://via.placeholder.com/500x300?text=Project+3" class="slider-item" onclick="openLightbox(this.src)">
+                    <img src="https://via.placeholder.com/500x300?text=Project+4" class="slider-item" onclick="openLightbox(this.src)">
+                    <img src="https://via.placeholder.com/500x300?text=Project+1" class="slider-item" onclick="openLightbox(this.src)">
+                    <img src="https://via.placeholder.com/500x300?text=Project+2" class="slider-item" onclick="openLightbox(this.src)">
+                </div>
             </div>
         </div>
 
@@ -243,6 +323,12 @@
         }
         function closeLightbox() {
             document.getElementById('lightbox').style.display = 'none';
+        }
+
+        function moveSlide(direction) {
+            const container = document.getElementById('sliderContainer');
+            const itemWidth = container.querySelector('.slider-item').offsetWidth + 10; 
+            container.scrollLeft += (direction * itemWidth);
         }
     </script>
 
