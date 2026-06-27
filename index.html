@@ -26,21 +26,25 @@
         .greeting-popup {
             position: fixed;
             top: 20px;
-            right: 20px; /* Posisikan di sebelah kanan */
-            /* left: 50%; <-- (Dihapus agar tidak lagi di tengah) */
-            
-            /* Sembunyikan di luar layar sebelah kanan sebesar 150% dari lebarnya */
+            right: 20px; 
             transform: translateX(150%); 
             
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            /* --- TEMA GLASSMORPHISM --- */
+            background: rgba(255, 255, 255, 0.35); /* Transparansi ditingkatkan */
+            backdrop-filter: blur(16px); /* Efek blur kaca diperkuat */
+            -webkit-backdrop-filter: blur(16px);
+            /* Efek pantulan cahaya di ujung kaca (kiri & atas lebih terang) */
+            border-top: 1px solid rgba(255, 255, 255, 0.8);
+            border-left: 1px solid rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15); /* Bayangan lebih dramatis agar mengambang */
+            /* -------------------------- */
+
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 0.85rem;
             gap: 6px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             z-index: 9999;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-weight: 600;
@@ -49,7 +53,6 @@
             align-items: center;
             opacity: 0;
             pointer-events: none;
-            /* Transisi untuk animasi geser ke kanan-kiri */
             transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
