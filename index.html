@@ -22,25 +22,22 @@
             min-height: 100vh;
         }
 
-        /* ==================== FITUR BARU: POPUP GREETING OTOMATIS ==================== */
+        /* ==================== POPUP GREETING (TEMA GLASSMORPHISM) ==================== */
         .greeting-popup {
             position: fixed;
             top: 20px;
             right: 20px; 
             transform: translateX(150%); 
             
-            /* --- TEMA GLASSMORPHISM --- */
-            background: rgba(255, 255, 255, 0.35); /* Transparansi ditingkatkan */
-            backdrop-filter: blur(16px); /* Efek blur kaca diperkuat */
+            background: rgba(255, 255, 255, 0.35); 
+            backdrop-filter: blur(16px); 
             -webkit-backdrop-filter: blur(16px);
-            /* Efek pantulan cahaya di ujung kaca (kiri & atas lebih terang) */
             border-top: 1px solid rgba(255, 255, 255, 0.8);
             border-left: 1px solid rgba(255, 255, 255, 0.8);
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
             border-right: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15); /* Bayangan lebih dramatis agar mengambang */
-            /* -------------------------- */
-
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15); 
+            
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 0.85rem;
@@ -56,10 +53,9 @@
             transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        /* State saat popup aktif muncul */
         .greeting-popup.show {
             opacity: 1;
-            transform: translateX(0); /* Geser masuk ke posisi asli (right: 20px) */
+            transform: translateX(0); 
         }
         /* ============================================================================== */
 
@@ -205,11 +201,7 @@
             100% { background-position: 0% 50%, 0% 50%; }
         }
 
-        .nav-btn:hover { 
-            transform: translateY(-50%) scale(1.1);
-            color: #000; 
-        }
-        
+        .nav-btn:hover { transform: translateY(-50%) scale(1.1); color: #000; }
         .nav-btn.prev { left: 5px; } 
         .nav-btn.next { right: 5px; }
 
@@ -237,15 +229,51 @@
         .btn i.fa-book-open { color: #3498db; font-size: 1.2rem; }
         .btn:hover { background: #333; color: #fff; }
 
-        /* Testimonial Grid */
-        h3 { 
-            margin-bottom: 20px; 
-            text-align: center; 
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
+        /* ==================== SISTEM TAB (TOMBOL OPSI) ==================== */
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
         }
+        .tab-btn {
+            padding: 10px 20px;
+            border: 2px solid #333;
+            background: #fff;
+            color: #333;
+            font-family: 'Saira Stencil One', cursive;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn.active {
+            background: #333;
+            color: #fff;
+        }
+        .tab-btn:hover:not(.active) {
+            background: #eaeaea;
+        }
+
+        /* Konten Tab */
+        .tab-content {
+            display: none;
+            animation: fadeInTab 0.4s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* ================================================================== */
+
+        /* Testimonial Grid */
         .testi-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -259,19 +287,14 @@
             cursor: pointer;
             transition: 0.2s;
         }
-
-        /* Lightbox */
-        #lightbox {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.95); 
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            cursor: pointer;
+        
+        /* Wrapper Kolom Komentar */
+        .comment-section-wrapper {
+            background: #fff; 
+            padding: 25px; 
+            border-radius: 8px; 
+            border: 1px solid #ddd;
         }
-        #lightbox img { max-width: 90%; max-height: 80%; border: 1px solid #333; }
 
         /* Responsive Mobile */
         @media (max-width: 480px) {
@@ -287,9 +310,23 @@
             .nav-btn.prev { left: 5px; }
             .nav-btn.next { right: 5px; }
             
-            /* Sedikit penyesuaian popup agar tidak terlalu menempel tepi di mobile */
             .greeting-popup { right: 15px; top: 15px; }
+
+            .tab-btn { padding: 8px 15px; font-size: 0.85rem; flex: 1; justify-content: center; }
         }
+
+        /* Lightbox */
+        #lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.95); 
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+        }
+        #lightbox img { max-width: 90%; max-height: 80%; border: 1px solid #333; }
     </style>
 </head>
 <body>
@@ -341,21 +378,67 @@
             </a>
         </div>
 
-        <h3>-- TESTIMONI --</h3>
-        <div class="testi-grid">
-            <img src="https://image2url.com/images/1765628053757-a4c01680-4f60-4e8f-8980-042071655a28.jpg" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://image2url.com/images/1765628327495-9c5b63fd-0f90-4771-8786-d1df6e04dea3.jpg" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://image2url.com/images/1765628365941-9854998d-d820-478d-9268-ba1aa80bdd14.jpg" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://image2url.com/images/1765628395076-d30e2e08-127f-4eb5-9154-5f5edafd02bc.jpg" class="testi-item" onclick="openLightbox(this.src)">
-            <img src="https://drive.google.com/uc?export=view&id=184YKnOmTpei-Naceg5NxA8ty95TRRmwi" class="testi-item" onclick="openLightbox(this.src)">
+        <!-- ==================== BAGIAN TAB TOMBOL OPSI ==================== -->
+        <div class="tab-buttons">
+            <!-- Tombol Testimoni (Aktif secara default) -->
+            <button class="tab-btn active" onclick="switchTab(event, 'tab-testimoni')">
+                <i class="fas fa-star"></i> TESTIMONI
+            </button>
+            <!-- Tombol Komentar -->
+            <button class="tab-btn" onclick="switchTab(event, 'tab-komentar')">
+                <i class="fas fa-comments"></i> KOMENTAR
+            </button>
         </div>
-    </div>
+
+        <!-- Konten 1: Galeri Testimoni -->
+        <div id="tab-testimoni" class="tab-content active">
+            <div class="testi-grid">
+                <img src="https://image2url.com/images/1765628053757-a4c01680-4f60-4e8f-8980-042071655a28.jpg" class="testi-item" onclick="openLightbox(this.src)">
+                <img src="https://image2url.com/images/1765628327495-9c5b63fd-0f90-4771-8786-d1df6e04dea3.jpg" class="testi-item" onclick="openLightbox(this.src)">
+                <img src="https://image2url.com/images/1765628365941-9854998d-d820-478d-9268-ba1aa80bdd14.jpg" class="testi-item" onclick="openLightbox(this.src)">
+                <img src="https://image2url.com/images/1765628395076-d30e2e08-127f-4eb5-9154-5f5edafd02bc.jpg" class="testi-item" onclick="openLightbox(this.src)">
+                <img src="https://drive.google.com/uc?export=view&id=184YKnOmTpei-Naceg5NxA8ty95TRRmwi" class="testi-item" onclick="openLightbox(this.src)">
+            </div>
+        </div>
+
+        <!-- Konten 2: HTML Comment Box -->
+        <div id="tab-komentar" class="tab-content">
+            <div class="comment-section-wrapper">
+                <!-- begin wwww.htmlcommentbox.com -->
+                <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">HTML Comment Box</a> is loading comments...</div>
+                <link rel="stylesheet" type="text/css" href="https://www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
+                <script type="text/javascript" id="hcb"> /*<!--*/ if(!window.hcb_user){hcb_user={};} (function(){var s=document.createElement("script"), l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"), h="https://www.htmlcommentbox.com";s.setAttribute("type","text/javascript");s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&mod=%241%24wq1rdBcg%24ppU2jSv34Geo0NbNI5N4W."+"&opts=16798&num=10&ts=1784521417336");if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})(); /*-->*/ </script>
+                <!-- end www.htmlcommentbox.com -->
+            </div>
+        </div>
+        <!-- ================================================================ -->
+
+    </div> <!-- End Container -->
 
     <div id="lightbox" onclick="closeLightbox()">
         <img id="lightbox-img" src="">
     </div>
 
     <script>
+        // Logika Perpindahan Tab
+        function switchTab(event, tabId) {
+            // Sembunyikan semua konten
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Hapus status aktif dari semua tombol
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Tampilkan konten yang dipilih dan beri status aktif pada tombol yang diklik
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
         // Logika Lightbox
         function openLightbox(src) {
             document.getElementById('lightbox-img').src = src;
@@ -372,13 +455,13 @@
             container.scrollBy({ left: direction * itemWidth, behavior: 'smooth' }); 
         }
 
-        // WAKTU & POPUP
+        // WAKTU & POPUP GLASSMORPHISM
         window.addEventListener('DOMContentLoaded', () => {
             const hours = new Date().getHours();
             let greetingText = "";
             let greetingIcon = "";
 
-            if (hours >= 3 && hours < 11) {
+            if (hours >= 4 && hours < 11) {
                 greetingText = "Selamat Pagi!";
                 greetingIcon = "🌅";
             } else if (hours >= 11 && hours < 15) {
