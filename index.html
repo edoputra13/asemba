@@ -7,8 +7,8 @@
     
     <!-- Import Google Fonts (Inter) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Import FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Import FontAwesome Versi Terbaru (6.5.2) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
         /* --- RESET & VARIABEL --- */
@@ -45,10 +45,36 @@
 
         /* --- TEKS BERJALAN --- */
         .announcement-bar { background-color: var(--bg-card); padding: 16px 20px; border-radius: 12px; display: flex; align-items: center; gap: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); overflow: hidden; }
-        .announcement-bar > i { color: var(--primary-blue); font-size: 18px; z-index: 2; padding-right: 4px; } /* Diperkecil jaraknya */
+        .announcement-bar > i { color: var(--primary-blue); font-size: 18px; z-index: 2; padding-right: 4px; } 
         .marquee-wrapper { flex: 1; overflow: hidden; white-space: nowrap; }
-        .marquee-text { display: inline-block; font-size: 14px; font-weight: 500; padding-left: 100%; animation: marquee 10s linear infinite; } /* Dipercepat ke 10s */
+        .marquee-text { display: inline-block; font-size: 14px; font-weight: 500; padding-left: 100%; animation: marquee 10s linear infinite; } 
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* --- SLIDER BROSUR FILM (Ubah ke Format Portrait & Lebih Kecil) --- */
+        .slider-container {
+            width: 100%;
+            max-width: 180px; /* Lebar diperkecil lagi (sebelumnya 250px) */
+            margin: 0 auto; 
+            overflow: hidden;
+            border-radius: 12px; /* Border radius sedikit disesuaikan agar proporsional */
+            position: relative;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
+            background-color: var(--bg-card);
+        }
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slider-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .slider-slide img {
+            width: 100%;
+            height: 270px; /* Tinggi diperkecil (sebelumnya 375px) menyesuaikan rasio 2:3 */
+            object-fit: cover;
+            display: block;
+        }
 
         /* --- BUTTONS AREA (GLASS EFFECT) --- */
         .btn-container { display: flex; gap: 12px; }
@@ -62,7 +88,7 @@
             border-radius: 12px; 
             text-decoration: none; 
             font-weight: 700; 
-            color: var(--primary-blue); /* Warna biru tema */
+            color: var(--primary-blue); 
             transition: all 0.3s ease;
             background: rgba(0, 0, 0, 0.05);
             backdrop-filter: blur(10px);
@@ -97,10 +123,29 @@
     </header>
 
     <main>
+        <!-- Teks Berjalan -->
         <div class="announcement-bar">
             <i class="fas fa-bell"></i>
             <div class="marquee-wrapper">
-                <span class="marquee-text">Selamat datang! Hubungi kami melalui tombol di bawah untuk layanan lebih lanjut.</span>
+                <span class="marquee-text">Selamat datang! Hubungi kami untuk order melalui tombol di bawah untuk informasi lebih lanjut.</span>
+            </div>
+        </div>
+
+        <!-- SLIDER BROSUR FILM (Portrait & Lebih Kecil) -->
+        <div class="slider-container">
+            <div class="slider-wrapper" id="movieSlider">
+                <!-- Slide 1 -->
+                <div class="slider-slide">
+                    <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400&h=600&auto=format&fit=crop" alt="Brosur Film 1">
+                </div>
+                <!-- Slide 2 -->
+                <div class="slider-slide">
+                    <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=400&h=600&auto=format&fit=crop" alt="Brosur Film 2">
+                </div>
+                <!-- Slide 3 -->
+                <div class="slider-slide">
+                    <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=400&h=600&auto=format&fit=crop" alt="Brosur Film 3">
+                </div>
             </div>
         </div>
 
@@ -110,10 +155,11 @@
                 <i class="fab fa-whatsapp" style="color: #25d366; font-size: 20px;"></i> WhatsApp
             </a>
             <a href="https://x.com/USERNAME_ANDA" target="_blank" class="btn">
-                <i class="fab fa-x-twitter" style="font-size: 20px;"></i> Twitter
+                <i class="fa-brands fa-x-twitter" style="color: #000000; font-size: 20px;"></i> X (Twitter)
             </a>
         </div>
 
+        <!-- Area Komentar -->
         <div class="main-card" id="komentar-area">
              <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">HTML Comment Box</a> is loading...</div>
              <script type="text/javascript" id="hcb"> /*<!--*/ if(!window.hcb_user){hcb_user={};} (function(){var s=document.createElement("script"), l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"), h="https://www.htmlcommentbox.com";s.setAttribute("type","text/javascript");s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&mod=%241%24wq1rdBcg%24ppU2jSv34Geo0NbNI5N4W."+"&opts=16798&num=10&ts=1784521417336");if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})(); /*-->*/ </script>
@@ -121,8 +167,33 @@
     </main>
 
     <script>
+        // Script untuk Dropdown Menu
         function toggleMenu() { document.getElementById("dropdownMenu").classList.toggle("show-dropdown"); }
-        window.onclick = function(event) { if (!event.target.closest('.dropdown')) { var dropdowns = document.getElementsByClassName("dropdown-content"); for (var i = 0; i < dropdowns.length; i++) { dropdowns[i].classList.remove('show-dropdown'); } } }
+        window.onclick = function(event) { 
+            if (!event.target.closest('.dropdown')) { 
+                var dropdowns = document.getElementsByClassName("dropdown-content"); 
+                for (var i = 0; i < dropdowns.length; i++) { 
+                    dropdowns[i].classList.remove('show-dropdown'); 
+                } 
+            } 
+        }
+
+        // Script untuk Slider Animasi Otomatis
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slider-slide');
+        const totalSlides = slides.length;
+        const sliderWrapper = document.getElementById('movieSlider');
+
+        function showNextSlide() {
+            if(totalSlides > 0) {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                const offset = -currentSlide * 100;
+                sliderWrapper.style.transform = `translateX(${offset}%)`;
+            }
+        }
+
+        // Jalankan fungsi ganti slide setiap 3 detik (3000 ms)
+        setInterval(showNextSlide, 4000);
     </script>
 </body>
 </html>
